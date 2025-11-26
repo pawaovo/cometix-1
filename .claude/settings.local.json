@@ -6,7 +6,9 @@
       "Bash(/d/flutter/bin/flutter:*)",
       "Bash(/d/flutter/bin/dart run build_runner build:*)",
       "Bash(/d/flutter/bin/dart:*)",
-      "Bash(nc:*)"
+      "Bash(nc:*)",
+      "Bash(test:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
