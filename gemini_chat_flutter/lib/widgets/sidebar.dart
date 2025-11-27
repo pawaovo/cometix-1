@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 import '../screens/home_screen.dart';
 import '../theme/app_theme.dart';
 
@@ -35,31 +36,29 @@ class Sidebar extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Container(
+                      child: shadcn.TextField(
+                        placeholder: const Text('搜索历史记录'),
+                        style: TextStyle(
+                          color: isDark ? AppTheme.gray100 : AppTheme.gray900,
+                        ),
                         decoration: BoxDecoration(
                           color: isDark ? AppTheme.gray800 : AppTheme.gray100,
                           borderRadius: BorderRadius.circular(24),
                         ),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: '搜索历史记录',
-                            hintStyle: TextStyle(
-                              color: isDark ? AppTheme.gray400 : AppTheme.gray500,
-                            ),
-                            prefixIcon: Icon(
+                        border: const Border.fromBorderSide(BorderSide.none),
+                        borderRadius: BorderRadius.circular(24),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                        features: [
+                          shadcn.InputLeadingFeature(
+                            Icon(
                               Symbols.search,
                               color: isDark ? AppTheme.gray500 : AppTheme.gray400,
                             ),
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 12,
-                            ),
                           ),
-                          style: TextStyle(
-                            color: isDark ? AppTheme.gray100 : AppTheme.gray900,
-                          ),
-                        ),
+                        ],
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -124,23 +123,10 @@ class Sidebar extends StatelessWidget {
                 child: Row(
                   children: [
                     // User Avatar
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: AppTheme.primaryColor,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'U',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: AppTheme.gray700,
-                          ),
-                        ),
-                      ),
+                    shadcn.Avatar(
+                      initials: 'U',
+                      size: 40,
+                      backgroundColor: AppTheme.primaryColor,
                     ),
                     const SizedBox(width: 16),
 
@@ -157,7 +143,7 @@ class Sidebar extends StatelessWidget {
                     ),
 
                     // Language Button
-                    IconButton(
+                    shadcn.IconButton.ghost(
                       onPressed: () {},
                       icon: Icon(
                         Symbols.translate,
@@ -166,7 +152,7 @@ class Sidebar extends StatelessWidget {
                     ),
 
                     // Settings Button
-                    IconButton(
+                    shadcn.IconButton.ghost(
                       onPressed: () {
                         onNavigate(AppView.settings);
                       },
@@ -221,23 +207,10 @@ class Sidebar extends StatelessWidget {
             child: Row(
               children: [
                 // Avatar
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: AppTheme.primaryColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Center(
-                    child: Text(
-                      letter,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: AppTheme.gray700,
-                      ),
-                    ),
-                  ),
+                shadcn.Avatar(
+                  initials: letter,
+                  size: 40,
+                  backgroundColor: AppTheme.primaryColor,
                 ),
                 const SizedBox(width: 16),
 

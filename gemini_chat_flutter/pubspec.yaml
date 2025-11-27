@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   # UI Components Library
-  shadcn_ui: ^1.0.0
+  shadcn_flutter: ^0.0.47
 
   # State Management
   flutter_riverpod: ^2.5.1

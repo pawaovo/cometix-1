@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 
 class AppTheme {
   // Tailwind-inspired colors
@@ -18,6 +18,48 @@ class AppTheme {
   static const Color gray800 = Color(0xFF1F2937);
   static const Color gray900 = Color(0xFF111827);
   static const Color accentBrown = Color(0xFF8B5E3C);
+
+  // shadcn_flutter 主题配置
+  static shadcn.ThemeData shadcnTheme = shadcn.ThemeData(
+    colorScheme: shadcn.ColorScheme.fromColors(
+      brightness: Brightness.light,
+      colors: {
+        'background': backgroundLight,
+        'foreground': gray900,
+        'card': cardLight,
+        'cardForeground': gray900,
+        'popover': cardLight,
+        'popoverForeground': gray900,
+        'primary': primaryColor,
+        'primaryForeground': gray900,
+        'secondary': gray200,
+        'secondaryForeground': gray900,
+        'muted': gray100,
+        'mutedForeground': gray500,
+        'accent': accentBrown,
+        'accentForeground': Colors.white,
+        'destructive': Colors.red,
+        'destructiveForeground': Colors.white,
+        'border': gray200,
+        'input': gray200,
+        'ring': gray300,
+        'chart1': primaryColor,
+        'chart2': accentBrown,
+        'chart3': gray400,
+        'chart4': gray600,
+        'chart5': gray800,
+        'sidebar': cardLight,
+        'sidebarForeground': gray900,
+        'sidebarPrimary': primaryColor,
+        'sidebarPrimaryForeground': gray900,
+        'sidebarAccent': accentBrown,
+        'sidebarAccentForeground': Colors.white,
+        'sidebarBorder': gray200,
+        'sidebarRing': gray300,
+      },
+    ),
+    radius: 12.0,
+  );
 
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
@@ -99,42 +141,5 @@ class AppTheme {
         ),
       ),
     ),
-  );
-
-  // Shadcn UI 主题配置
-  static ShadThemeData lightShadTheme = ShadThemeData(
-    brightness: Brightness.light,
-    colorScheme: ShadColorScheme.fromName(
-      'zinc',
-      brightness: Brightness.light,
-    ).copyWith(
-      background: backgroundLight,
-      card: cardLight,
-      primary: primaryColor,
-      border: gray200,
-      ring: gray300,
-      custom: {
-        'accentBrown': accentBrown,
-      },
-    ),
-    radius: 12.0,
-  );
-
-  static ShadThemeData darkShadTheme = ShadThemeData(
-    brightness: Brightness.dark,
-    colorScheme: ShadColorScheme.fromName(
-      'zinc',
-      brightness: Brightness.dark,
-    ).copyWith(
-      background: backgroundDark,
-      card: cardDark,
-      primary: primaryColor,
-      border: gray800,
-      ring: gray700,
-      custom: {
-        'accentBrown': accentBrown,
-      },
-    ),
-    radius: 12.0,
   );
 }

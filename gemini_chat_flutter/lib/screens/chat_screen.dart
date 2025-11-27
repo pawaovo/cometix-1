@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 import '../models/message.dart';
 import '../providers/messages_provider.dart';
 import '../providers/quick_phrases_provider.dart';
@@ -118,7 +119,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               child: Row(
                 children: [
                   // Menu Button
-                  IconButton(
+                  shadcn.IconButton.ghost(
                     onPressed: widget.onMenuClick,
                     icon: Icon(
                       Symbols.menu,
@@ -142,7 +143,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   ),
 
                   // Map Button
-                  IconButton(
+                  shadcn.IconButton.ghost(
                     onPressed: () {},
                     icon: Icon(
                       Symbols.map,
@@ -152,7 +153,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   ),
 
                   // New Chat Button
-                  IconButton(
+                  shadcn.IconButton.ghost(
                     onPressed: () {
                       ref.read(messagesProvider.notifier).clearMessages();
                     },
@@ -234,52 +235,53 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Flexible(
-                child: Container(
+                child: ConstrainedBox(
                   constraints: BoxConstraints(
                     maxWidth: MediaQuery.of(context).size.width * 0.85,
                   ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 14,
-                  ),
-                  decoration: BoxDecoration(
-                    color: isUser
+                  child: shadcn.Card(
+                    filled: isUser,
+                    fillColor: isUser
                         ? (isDark ? AppTheme.gray800 : AppTheme.gray100)
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(16).copyWith(
                       bottomRight: isUser ? Radius.zero : const Radius.circular(16),
                     ),
-                  ),
-                  child: message.text.isEmpty && message.role == 'model'
-                      ? _buildLoadingIndicator()
-                      : isUser
-                          ? Text(
-                              message.text,
-                              style: TextStyle(
-                                fontSize: 16,
-                                height: 1.5,
-                                color: isDark ? AppTheme.gray100 : AppTheme.gray900,
-                              ),
-                            )
-                          : MarkdownBody(
-                              data: message.text,
-                              styleSheet: MarkdownStyleSheet(
-                                p: TextStyle(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 14,
+                    ),
+                    child: message.text.isEmpty && message.role == 'model'
+                        ? _buildLoadingIndicator()
+                        : isUser
+                            ? Text(
+                                message.text,
+                                style: TextStyle(
                                   fontSize: 16,
                                   height: 1.5,
-                                  color: isDark ? AppTheme.gray200 : AppTheme.gray800,
-                                ),
-                                code: TextStyle(
-                                  backgroundColor:
-                                      isDark ? AppTheme.gray800 : AppTheme.gray100,
                                   color: isDark ? AppTheme.gray100 : AppTheme.gray900,
                                 ),
-                                codeblockDecoration: BoxDecoration(
-                                  color: isDark ? AppTheme.gray800 : AppTheme.gray100,
-                                  borderRadius: BorderRadius.circular(12),
+                              )
+                            : MarkdownBody(
+                                data: message.text,
+                                styleSheet: MarkdownStyleSheet(
+                                  p: TextStyle(
+                                    fontSize: 16,
+                                    height: 1.5,
+                                    color: isDark ? AppTheme.gray200 : AppTheme.gray800,
+                                  ),
+                                  code: TextStyle(
+                                    backgroundColor:
+                                        isDark ? AppTheme.gray800 : AppTheme.gray100,
+                                    color: isDark ? AppTheme.gray100 : AppTheme.gray900,
+                                  ),
+                                  codeblockDecoration: BoxDecoration(
+                                    color: isDark ? AppTheme.gray800 : AppTheme.gray100,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
                                 ),
                               ),
-                            ),
+                  ),
                 ),
               ),
             ],

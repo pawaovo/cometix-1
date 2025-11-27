@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 import '../theme/app_theme.dart';
 
 /// Common header for settings sub-pages
@@ -25,7 +26,7 @@ class SettingsHeader extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Row(
         children: [
-          IconButton(
+          shadcn.IconButton.ghost(
             onPressed: onBack,
             icon: Icon(
               Symbols.arrow_back,
@@ -44,7 +45,7 @@ class SettingsHeader extends StatelessWidget {
             ),
           ),
           if (actionIcon != null && onAction != null)
-            IconButton(
+            shadcn.IconButton.ghost(
               onPressed: onAction,
               icon: Icon(
                 actionIcon,
@@ -88,15 +89,13 @@ class SectionGroup extends StatelessWidget {
             ),
           ),
         ],
-        Container(
-          decoration: BoxDecoration(
-            color: isDark ? AppTheme.cardDark : AppTheme.cardLight,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: isDark ? AppTheme.gray800.withOpacity(0.3) : AppTheme.gray200,
-              width: 1,
-            ),
-          ),
+        shadcn.Card(
+          filled: true,
+          fillColor: isDark ? AppTheme.cardDark : AppTheme.cardLight,
+          borderRadius: BorderRadius.circular(16),
+          borderColor: isDark ? AppTheme.gray800.withValues(alpha: 0.3) : AppTheme.gray200,
+          borderWidth: 1,
+          padding: EdgeInsets.zero,
           child: Column(
             children: _addDividers(children, isDark),
           ),
@@ -115,7 +114,7 @@ class SectionGroup extends StatelessWidget {
           thickness: 1,
           indent: 16,
           endIndent: 16,
-          color: isDark ? AppTheme.gray800.withOpacity(0.5) : AppTheme.gray200,
+          color: isDark ? AppTheme.gray800.withValues(alpha: 0.5) : AppTheme.gray200,
         ));
       }
     }
@@ -265,29 +264,13 @@ class ToggleSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return GestureDetector(
-      onTap: () => onChange(!checked),
-      child: Container(
-        width: 48,
-        height: 28,
-        decoration: BoxDecoration(
-          color: checked ? AppTheme.accentBrown : (isDark ? AppTheme.gray700 : AppTheme.gray200),
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: AnimatedAlign(
-          duration: const Duration(milliseconds: 200),
-          alignment: checked ? Alignment.centerRight : Alignment.centerLeft,
-          child: Container(
-            width: 24,
-            height: 24,
-            margin: const EdgeInsets.symmetric(horizontal: 2),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-            ),
-          ),
-        ),
-      ),
+    return shadcn.Switch(
+      value: checked,
+      onChanged: onChange,
+      activeColor: AppTheme.accentBrown,
+      inactiveColor: isDark ? AppTheme.gray700 : AppTheme.gray200,
+      activeThumbColor: Colors.white,
+      inactiveThumbColor: Colors.white,
     );
   }
 }
@@ -394,28 +377,22 @@ class InputItem extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          TextField(
+          shadcn.TextField(
             controller: TextEditingController(text: value)
               ..selection = TextSelection.fromPosition(
                 TextPosition(offset: value.length),
               ),
             onChanged: onChange,
             obscureText: obscureText,
-            decoration: InputDecoration(
-              hintText: placeholder,
-              hintStyle: TextStyle(
-                color: isDark ? AppTheme.gray500 : AppTheme.gray400,
-              ),
-              filled: true,
-              fillColor: isDark ? AppTheme.gray800 : AppTheme.gray100,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 12,
-              ),
+            placeholder: placeholder != null ? Text(placeholder!) : null,
+            decoration: BoxDecoration(
+              color: isDark ? AppTheme.gray800 : AppTheme.gray100,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            border: const Border.fromBorderSide(BorderSide.none),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
             ),
             style: TextStyle(
               fontSize: 16,

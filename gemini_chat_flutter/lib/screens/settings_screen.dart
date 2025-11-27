@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 import '../theme/app_theme.dart';
 import 'settings_pages.dart';
 
@@ -71,7 +72,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: Row(
                 children: [
-                  IconButton(
+                  shadcn.IconButton.ghost(
                     onPressed: widget.onBack,
                     icon: Icon(
                       Symbols.arrow_back,
@@ -271,15 +272,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: isDark ? AppTheme.cardDark : AppTheme.cardLight,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: isDark ? AppTheme.gray800.withOpacity(0.3) : AppTheme.gray200,
-          width: 1,
-        ),
-      ),
+    return shadcn.Card(
+      filled: true,
+      fillColor: isDark ? AppTheme.cardDark : AppTheme.cardLight,
+      borderRadius: BorderRadius.circular(16),
+      borderColor: isDark ? AppTheme.gray800.withValues(alpha: 0.3) : AppTheme.gray200,
+      borderWidth: 1,
+      padding: EdgeInsets.zero,
       child: Column(
         children: items,
       ),
@@ -291,7 +290,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       height: 1,
       thickness: 1,
       indent: 56,
-      color: isDark ? AppTheme.gray800.withOpacity(0.5) : AppTheme.gray200,
+      color: isDark ? AppTheme.gray800.withValues(alpha: 0.5) : AppTheme.gray200,
     );
   }
 

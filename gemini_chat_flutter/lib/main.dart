@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 import 'theme/app_theme.dart';
 import 'screens/home_screen.dart';
 
@@ -23,21 +23,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ShadApp.custom(
-      title: 'Gemini Chat',
-      themeMode: ThemeMode.system,
-      theme: AppTheme.lightShadTheme,
-      darkTheme: AppTheme.darkShadTheme,
-      appBuilder: (context) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: Theme.of(context),
-          builder: (context, child) {
-            return ShadAppBuilder(child: child!);
-          },
-          home: const HomeScreen(),
-        );
-      },
+    return shadcn.Theme(
+      data: AppTheme.shadcnTheme,
+      child: MaterialApp(
+        title: 'Gemini Chat',
+        debugShowCheckedModeBanner: false,
+        themeMode: ThemeMode.system,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        home: const HomeScreen(),
+      ),
     );
   }
 }

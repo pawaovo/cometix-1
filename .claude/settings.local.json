@@ -18,7 +18,15 @@
       "Bash(\"C:/Users/m1397/.local/bin/uv.exe\" tool run acemcp --help)",
       "Bash(\"C:/Users/m1397/.local/bin/uv.exe\" tool run acemcp index)",
       "mcp__acemcp__search_context",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(\"D:\\flutter\\bin\\flutter.bat\" run -d web-server --web-port=9999)",
+      "Bash(\"D:\\flutter\\bin\\flutter.bat\" run -d web-server --web-port=8888)",
+      "Bash(taskkill:*)",
+      "Bash(nul)",
+      "Bash(\"D:\\flutter\\bin\\flutter.bat\" pub search shadcn_flutter)",
+      "Bash(\"D:\\flutter\\bin\\flutter.bat\" pub get:*)",
+      "Bash(\"D:\\flutter\\bin\\flutter.bat\" run -d web-server --web-port=7777)",
+      "Bash(\"D:\\flutter\\bin\\flutter.bat\" run -d web-server --web-port=6666)"
     ],
     "deny": [],
     "ask": []

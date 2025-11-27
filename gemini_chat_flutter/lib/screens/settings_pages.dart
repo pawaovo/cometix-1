@@ -411,7 +411,7 @@ class _ProxySettingsPageState extends State<ProxySettingsPage> {
                               color: isDark ? AppTheme.cardDark : AppTheme.cardLight,
                               borderRadius: BorderRadius.circular(16),
                               border: Border.all(
-                                color: isDark ? AppTheme.gray800.withOpacity(0.3) : AppTheme.gray200,
+                                color: isDark ? AppTheme.gray800.withValues(alpha: 0.3) : AppTheme.gray200,
                               ),
                             ),
                             child: DropdownButton<String>(
@@ -807,7 +807,7 @@ class _AssistantSettingsPageState extends State<AssistantSettingsPage> {
                           color: isDark ? AppTheme.cardDark : AppTheme.cardLight,
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: isDark ? AppTheme.gray800.withOpacity(0.3) : AppTheme.gray200,
+                            color: isDark ? AppTheme.gray800.withValues(alpha: 0.3) : AppTheme.gray200,
                           ),
                         ),
                         child: Padding(
@@ -992,7 +992,7 @@ class _ProvidersPageState extends State<ProvidersPage> {
                         color: isDark ? AppTheme.cardDark : AppTheme.cardLight,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: isDark ? AppTheme.gray800.withOpacity(0.3) : AppTheme.gray200,
+                          color: isDark ? AppTheme.gray800.withValues(alpha: 0.3) : AppTheme.gray200,
                         ),
                       ),
                       child: Material(
@@ -1219,7 +1219,7 @@ class _MCPSettingsPageState extends State<MCPSettingsPage> {
                           color: isDark ? AppTheme.cardDark : AppTheme.cardLight,
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: isDark ? AppTheme.gray800.withOpacity(0.3) : AppTheme.gray200,
+                            color: isDark ? AppTheme.gray800.withValues(alpha: 0.3) : AppTheme.gray200,
                           ),
                         ),
                         child: Column(

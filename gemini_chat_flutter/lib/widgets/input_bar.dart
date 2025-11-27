@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 import '../models/quick_phrase.dart';
 import '../theme/app_theme.dart';
 
@@ -419,9 +420,8 @@ class _InputBarState extends State<InputBar> {
     required bool isDark,
   }) {
     final isActive = _activeTool == tool;
-    return IconButton(
+    return shadcn.IconButton.ghost(
       onPressed: () => _toggleTool(tool),
-      tooltip: tooltip,
       icon: Icon(
         icon,
         size: 26,
@@ -459,7 +459,7 @@ class _InputBarState extends State<InputBar> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (!_isMenuExpanded)
-                  IconButton(
+                  shadcn.IconButton.ghost(
                     onPressed: () {
                       setState(() {
                         _isMenuExpanded = true;
@@ -473,7 +473,7 @@ class _InputBarState extends State<InputBar> {
                     ),
                   )
                 else ...[
-                  IconButton(
+                  shadcn.IconButton.ghost(
                     onPressed: () {},
                     icon: Icon(
                       Symbols.camera_alt,
@@ -481,7 +481,7 @@ class _InputBarState extends State<InputBar> {
                       color: isDark ? AppTheme.gray300 : AppTheme.gray600,
                     ),
                   ),
-                  IconButton(
+                  shadcn.IconButton.ghost(
                     onPressed: () {},
                     icon: Icon(
                       Symbols.image,
@@ -489,7 +489,7 @@ class _InputBarState extends State<InputBar> {
                       color: isDark ? AppTheme.gray300 : AppTheme.gray600,
                     ),
                   ),
-                  IconButton(
+                  shadcn.IconButton.ghost(
                     onPressed: () {},
                     icon: Icon(
                       Symbols.folder,
@@ -504,24 +504,19 @@ class _InputBarState extends State<InputBar> {
 
           // Text Input
           Expanded(
-            child: TextField(
+            child: shadcn.TextField(
               controller: _controller,
               focusNode: _focusNode,
               enabled: !widget.disabled,
-              decoration: InputDecoration(
-                hintText: '发送消息',
-                hintStyle: TextStyle(
-                  color: isDark ? AppTheme.gray500 : AppTheme.gray400,
-                ),
-                border: InputBorder.none,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 8,
-                ),
-              ),
+              placeholder: const Text('发送消息'),
               style: TextStyle(
                 fontSize: 16,
                 color: isDark ? AppTheme.gray200 : AppTheme.gray700,
+              ),
+              border: const Border.fromBorderSide(BorderSide.none),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 8,
+                vertical: 8,
               ),
               maxLines: null,
               textInputAction: TextInputAction.send,
