@@ -14,10 +14,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 快捷短语系统
 - 深色模式支持
 - Markdown 渲染
+- **shadcn_flutter 设计系统**（已完成 100% 迁移）
 - Material 3 设计语言
 
 **技术栈**：
 - Flutter 3.38.3+ / Dart 3.10.1+
+- **shadcn_flutter ^0.0.47**（UI 组件库）
 - Riverpod（状态管理）
 - Freezed（不可变数据模型）
 - google_generative_ai（Gemini SDK）
@@ -109,11 +111,19 @@ gemini_chat_flutter/
 - copyWith 功能
 - Union types 支持
 
+**UI 组件库：shadcn_flutter**
+- 现代化的设计系统
+- 70+ 精美组件
+- 完整的深色/浅色模式支持
+- 高度可定制
+- 类型安全
+
 **UI 框架：Material 3**
 - 现代设计系统
 - 内置深色模式
 - 自适应组件
 - 更好的无障碍支持
+- 与 shadcn_flutter 完美共存
 
 ---
 
@@ -156,8 +166,27 @@ gemini_chat_flutter/
 
 位置：`lib/theme/app_theme.dart`
 
-Material 3 主题配置，包含完整的 Light/Dark 模式：
+**双主题系统**：shadcn_flutter + Material 3
 
+#### shadcn_flutter 主题
+```dart
+static shadcn.ThemeData shadcnTheme = shadcn.ThemeData(
+  colorScheme: shadcn.ColorScheme.fromColors(
+    brightness: Brightness.light,
+    colors: {
+      'background': backgroundLight,
+      'foreground': gray900,
+      'card': cardLight,
+      'primary': primaryColor,
+      'accent': accentBrown,
+      // ... 完整色彩系统
+    },
+  ),
+  radius: 12.0,
+);
+```
+
+#### Material 3 主题
 ```dart
 // 核心颜色
 primaryColor: Color(0xFFE4D5D5)
@@ -280,6 +309,12 @@ flutter pub upgrade
    - 常量：`camelCase`（不使用 UPPER_CASE）
    - 私有成员：`_camelCase`
 
+8. **shadcn_flutter 组件使用规范**
+   - 优先使用 shadcn 组件而非原生 Flutter 组件
+   - 导入时使用别名：`import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;`
+   - 注意 API 差异（参见 shadcn_flutter 组件使用指南）
+   - 保持与 Material 3 主题的兼容性
+
 ---
 
 ## 测试
@@ -326,6 +361,9 @@ flutter test --coverage
 ### 核心依赖
 
 ```yaml
+# UI 组件库
+shadcn_flutter: ^0.0.47
+
 # 状态管理
 flutter_riverpod: ^2.5.1
 
@@ -357,6 +395,7 @@ flutter_lints: ^6.0.0
 
 ### 已完成功能 ✅
 - Flutter 基础架构（Riverpod + Freezed）
+- **shadcn_flutter 组件迁移（100% 完成，27+ 组件）**
 - Zoom Drawer 侧边栏动画
 - 聊天界面与流式 AI 响应
 - Markdown 渲染
@@ -385,9 +424,10 @@ flutter_lints: ^6.0.0
 ### 添加新功能时
 1. 先在 `models/` 定义数据模型（使用 Freezed）
 2. 在 `providers/` 创建状态管理
-3. 在 `widgets/` 或 `screens/` 实现 UI
+3. 在 `widgets/` 或 `screens/` 实现 UI（**优先使用 shadcn_flutter 组件**）
 4. 运行 `dart run build_runner build` 生成代码
 5. 测试 Light/Dark 模式兼容性
+6. 运行 `flutter analyze` 确保无错误和警告
 
 ### 调试技巧
 - 使用 `debugPrint()` 而非 `print()`
@@ -404,9 +444,108 @@ flutter_lints: ^6.0.0
 
 ---
 
+## shadcn_flutter 组件使用指南
+
+### 迁移文档
+
+完整的 shadcn_flutter 迁移报告请参阅：**`gemini_chat_flutter/SHADCN_MIGRATION.md`**
+
+该文档包含：
+- 完整的组件迁移统计（27+ 组件）
+- API 差异说明
+- 代码示例
+- 最佳实践
+- 已知问题和注意事项
+
+### 常用组件 API
+
+#### TextField
+```dart
+shadcn.TextField(
+  controller: controller,
+  placeholder: Text('提示文本'),
+  style: TextStyle(...),
+  border: Border.fromBorderSide(BorderSide.none),
+  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+)
+```
+
+#### IconButton
+```dart
+shadcn.IconButton.ghost(
+  onPressed: () {},
+  icon: Icon(Icons.menu),
+)
+```
+
+#### Avatar
+```dart
+shadcn.Avatar(
+  initials: 'U',
+  size: 40,
+  backgroundColor: AppTheme.primaryColor,
+  // 注意：不支持 textStyle 参数
+)
+```
+
+#### Card
+```dart
+shadcn.Card(
+  filled: true,
+  fillColor: Colors.white,
+  borderRadius: BorderRadius.circular(16),
+  borderColor: Colors.grey,  // 使用 borderColor 而非 border
+  borderWidth: 1,            // 使用 borderWidth
+  padding: EdgeInsets.zero,
+  child: Widget,
+)
+```
+
+#### Switch
+```dart
+shadcn.Switch(
+  value: checked,
+  onChanged: (value) {},
+  activeColor: Colors.blue,
+  inactiveColor: Colors.grey,
+)
+```
+
+### API 差异注意事��
+
+1. **Avatar 组件**
+   - ❌ 不支持 `textStyle` 参数
+   - ✅ 需通过 AvatarTheme 配置
+
+2. **Card 组件**
+   - ❌ 不使用 `border: Border.all(...)`
+   - ✅ 使用 `borderColor` 和 `borderWidth`
+
+3. **TextField 组件**
+   - ❌ 不使用 `hintText`
+   - ✅ 使用 `placeholder: Text(...)`
+
+### 主题配置
+
+在 `lib/main.dart` 中使用 shadcn.Theme 包裹应用：
+
+```dart
+return shadcn.Theme(
+  data: AppTheme.shadcnTheme,
+  child: MaterialApp(
+    theme: AppTheme.lightTheme,
+    darkTheme: AppTheme.darkTheme,
+    home: const HomeScreen(),
+  ),
+);
+```
+
+---
+
 ## 相关资源
 
 - **Flutter 官方文档**: https://flutter.dev/docs
+- **shadcn_flutter 文档**: https://pub.dev/packages/shadcn_flutter
 - **Riverpod 文档**: https://riverpod.dev
 - **Freezed 文档**: https://pub.dev/packages/freezed
 - **Gemini API 文档**: https://ai.google.dev/docs
