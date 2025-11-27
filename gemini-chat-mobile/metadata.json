@@ -1,8 +1,0 @@
-{
-  "name": "Gemini Chat Mobile",
-  "description": "A high-fidelity mobile chat application interface with Gemini AI integration, featuring a sidebar, settings menu, and comprehensive chat functionality.",
-  "requestFramePermissions": [
-    "camera",
-    "microphone"
-  ]
-}

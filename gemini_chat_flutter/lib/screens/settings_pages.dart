@@ -853,7 +853,7 @@ class _AssistantSettingsPageState extends State<AssistantSettingsPage> {
                           ),
                         ),
                       );
-                    }).toList(),
+                    }),
                 ],
               ),
             ),
@@ -1046,7 +1046,7 @@ class _ProvidersPageState extends State<ProvidersPage> {
                         ),
                       ),
                     );
-                  }).toList(),
+                  }),
                 ],
               ),
             ),
@@ -1272,7 +1272,7 @@ class _MCPSettingsPageState extends State<MCPSettingsPage> {
                           ],
                         ),
                       );
-                    }).toList(),
+                    }),
                 ],
               ),
             ),

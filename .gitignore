@@ -1,0 +1,27 @@
+# Flutter/Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+*.dill
+*.snapshot
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 环境变量（包含敏感信息）
+.env
+.env.local
+*.env
+
+# Misc
+*.log
+.DS_Store
+nul

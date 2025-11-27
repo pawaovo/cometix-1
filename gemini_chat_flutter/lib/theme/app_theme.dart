@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
 class AppTheme {
   // Tailwind-inspired colors
@@ -98,5 +99,42 @@ class AppTheme {
         ),
       ),
     ),
+  );
+
+  // Shadcn UI 主题配置
+  static ShadThemeData lightShadTheme = ShadThemeData(
+    brightness: Brightness.light,
+    colorScheme: ShadColorScheme.fromName(
+      'zinc',
+      brightness: Brightness.light,
+    ).copyWith(
+      background: backgroundLight,
+      card: cardLight,
+      primary: primaryColor,
+      border: gray200,
+      ring: gray300,
+      custom: {
+        'accentBrown': accentBrown,
+      },
+    ),
+    radius: 12.0,
+  );
+
+  static ShadThemeData darkShadTheme = ShadThemeData(
+    brightness: Brightness.dark,
+    colorScheme: ShadColorScheme.fromName(
+      'zinc',
+      brightness: Brightness.dark,
+    ).copyWith(
+      background: backgroundDark,
+      card: cardDark,
+      primary: primaryColor,
+      border: gray800,
+      ring: gray700,
+      custom: {
+        'accentBrown': accentBrown,
+      },
+    ),
+    radius: 12.0,
   );
 }

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 import 'theme/app_theme.dart';
 import 'screens/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Load environment variables
+  // 加载环境变量
   try {
     await dotenv.load(fileName: ".env");
   } catch (e) {
@@ -22,13 +23,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ShadApp.custom(
       title: 'Gemini Chat',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      home: const HomeScreen(),
+      theme: AppTheme.lightShadTheme,
+      darkTheme: AppTheme.darkShadTheme,
+      appBuilder: (context) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: Theme.of(context),
+          builder: (context, child) {
+            return ShadAppBuilder(child: child!);
+          },
+          home: const HomeScreen(),
+        );
+      },
     );
   }
 }

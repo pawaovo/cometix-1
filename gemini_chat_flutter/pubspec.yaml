@@ -35,6 +35,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  # UI Components Library
+  shadcn_ui: ^1.0.0
+
   # State Management
   flutter_riverpod: ^2.5.1
 
