@@ -1,0 +1,71 @@
+# BMM Workflow Status - Cometix
+# Generated: 2024-11-28
+# Track: BMad Method | Type: Brownfield
+
+generated: "2024-11-28"
+project: "Cometix"
+project_type: "Flutter Gemini Chat App"
+selected_track: "bmad-method"
+field_type: "brownfield"
+workflow_path: "method-brownfield.yaml"
+
+workflow_status:
+  # Prerequisite - Document existing codebase
+  prerequisite:
+    document-project:
+      status: docs/bmm/index.md
+      agent: analyst
+      command: document-project
+      note: "Analyze existing Flutter codebase before planning"
+
+  # Phase 0: Discovery (User Selected)
+  phase_0_discovery:
+    brainstorm-project:
+      status: docs/bmm/bmm-brainstorming-session-2024-11-28.md
+      selected: true
+      agent: analyst
+      command: brainstorm-project
+
+    research:
+      status: docs/bmm/research-comprehensive-2024-11-28.md
+      selected: true
+      agent: analyst
+      command: research
+
+  # Phase 1: Planning
+  phase_1_planning:
+    prd:
+      status: docs/bmm/prd.md
+      agent: pm
+      command: prd
+      note: "PRD focused on optimization features"
+
+    create-ux-design:
+      status: docs/bmm/ux-design-specification.md
+      condition: if_has_ui
+      agent: ux-designer
+      command: create-ux-design
+
+  # Phase 2: Solutioning
+  phase_2_solutioning:
+    create-architecture:
+      status: docs/bmm/architecture.md
+      agent: architect
+      command: architecture
+
+    create-epics-and-stories:
+      status: required
+      agent: pm
+      command: create-epics-and-stories
+
+    implementation-readiness:
+      status: required
+      agent: architect
+      command: implementation-readiness
+
+  # Phase 3: Implementation
+  phase_3_implementation:
+    sprint-planning:
+      status: required
+      agent: sm
+      command: sprint-planning

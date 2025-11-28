@@ -1,0 +1,21 @@
+# BMM Configuration for Cometix
+# Generated: 2025-11-28
+
+# User settings
+user_name: "m1397"
+user_skill_level: "expert"
+
+# Project settings
+project_name: "Cometix"
+
+# Language settings
+communication_language: "zh-CN"
+document_output_language: "zh-CN"
+
+# Output paths
+output_folder: "docs/bmm"
+sprint_artifacts: "docs/bmm/sprint-artifacts"
+
+# Optional features
+tea_use_mcp_enhancements: false
+tea_use_playwright_utils: false

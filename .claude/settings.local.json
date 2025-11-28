@@ -26,7 +26,18 @@
       "Bash(\"D:\\flutter\\bin\\flutter.bat\" pub search shadcn_flutter)",
       "Bash(\"D:\\flutter\\bin\\flutter.bat\" pub get:*)",
       "Bash(\"D:\\flutter\\bin\\flutter.bat\" run -d web-server --web-port=7777)",
-      "Bash(\"D:\\flutter\\bin\\flutter.bat\" run -d web-server --web-port=6666)"
+      "Bash(\"D:\\flutter\\bin\\flutter.bat\" run -d web-server --web-port=6666)",
+      "SlashCommand(/bmad:bmm:workflows:workflow-init)",
+      "WebSearch",
+      "Bash(git clone:*)",
+      "SlashCommand(/bmad:bmm:workflows:brainstorm-project)",
+      "WebFetch(domain:monica.im)",
+      "mcp__context7__resolve-library-id",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "mcp__context7__get-library-docs",
+      "SlashCommand(/bmad:bmm:workflows:prd)",
+      "SlashCommand(/bmad:bmm:workflows:create-ux-design)",
+      "SlashCommand(/bmad:bmm:workflows:architecture)"
     ],
     "deny": [],
     "ask": []
