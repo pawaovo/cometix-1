@@ -280,14 +280,14 @@ class ValueItem extends StatelessWidget {
   final String label;
   final String? value;
   final IconData? icon;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const ValueItem({
     super.key,
     required this.label,
     this.value,
     this.icon,
-    required this.onTap,
+    this.onTap,
   });
 
   @override
