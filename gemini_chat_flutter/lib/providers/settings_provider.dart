@@ -5,6 +5,7 @@ import '../models/search_service.dart';
 import '../models/provider_config.dart';
 import '../models/mcp_config.dart';
 import '../models/proxy_config.dart';
+import '../models/backup.dart';
 
 /// 设置提供者 - 管理应用全局设置
 class SettingsProvider extends ChangeNotifier {
@@ -42,6 +43,9 @@ class SettingsProvider extends ChangeNotifier {
 
   // 代理相关
   static const String _proxyConfigKey = 'proxy_config_v1';
+
+  // WebDAV 备份相关
+  static const String _webDavConfigKey = 'webdav_config_v1';
 
   // ===== 基础设置字段 =====
   ThemeMode _themeMode = ThemeMode.system;
@@ -82,6 +86,9 @@ class SettingsProvider extends ChangeNotifier {
 
   // ===== 代理设置字段 =====
   ProxyConfig _proxyConfig = const ProxyConfig();
+
+  // ===== WebDAV 备份设置字段 =====
+  WebDavConfig _webDavConfig = const WebDavConfig();
 
   // ===== Getters - 基础设置 =====
   ThemeMode get themeMode => _themeMode;
@@ -137,6 +144,9 @@ class SettingsProvider extends ChangeNotifier {
 
   // ===== Getters - 代理设置 =====
   ProxyConfig get proxyConfig => _proxyConfig;
+
+  // ===== Getters - WebDAV 备份设置 =====
+  WebDavConfig get webDavConfig => _webDavConfig;
 
   // ===== 默认 Prompt =====
   static const String defaultTitlePrompt = '''请为以下对话生成一个简短的标题（不超过20个字）：
@@ -270,6 +280,16 @@ class SettingsProvider extends ChangeNotifier {
         }
       }
 
+      // 加载 WebDAV 配置
+      final webDavStr = prefs.getString(_webDavConfigKey);
+      if (webDavStr != null && webDavStr.isNotEmpty) {
+        try {
+          _webDavConfig = WebDavConfig.fromJson(jsonDecode(webDavStr) as Map<String, dynamic>);
+        } catch (e) {
+          debugPrint('加载 WebDAV 配置失败: $e');
+        }
+      }
+
       notifyListeners();
     } catch (e) {
       debugPrint('加载设置失败: $e');
@@ -332,6 +352,10 @@ class SettingsProvider extends ChangeNotifier {
       // 保存代理配置
       final proxyJson = jsonEncode(_proxyConfig.toJson());
       await prefs.setString(_proxyConfigKey, proxyJson);
+
+      // 保存 WebDAV 配置
+      final webDavJson = jsonEncode(_webDavConfig.toJson());
+      await prefs.setString(_webDavConfigKey, webDavJson);
     } catch (e) {
       debugPrint('保存设置失败: $e');
     }
@@ -572,6 +596,13 @@ class SettingsProvider extends ChangeNotifier {
   // ===== 代理管理方法 =====
   Future<void> setProxyConfig(ProxyConfig config) async {
     _proxyConfig = config;
+    notifyListeners();
+    await _save();
+  }
+
+  // ===== WebDAV 备份管理方法 =====
+  Future<void> setWebDavConfig(WebDavConfig config) async {
+    _webDavConfig = config;
     notifyListeners();
     await _save();
   }
