@@ -150,7 +150,7 @@ class _QuickPhraseCard extends StatelessWidget {
 
     return shadcn.Card(
       filled: true,
-      fillColor: isDark ? AppTheme.gray900.withOpacity(0.3) : Colors.white,
+      fillColor: isDark ? AppTheme.gray900.withValues(alpha: 0.3) : Colors.white,
       borderRadius: BorderRadius.circular(16),
       borderColor: isDark ? AppTheme.gray800 : AppTheme.gray200,
       borderWidth: 1,
@@ -164,10 +164,10 @@ class _QuickPhraseCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 decoration: BoxDecoration(
-                  color: AppTheme.primaryColor.withOpacity(0.1),
+                  color: AppTheme.primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: AppTheme.primaryColor.withOpacity(0.3),
+                    color: AppTheme.primaryColor.withValues(alpha: 0.3),
                     width: 1,
                   ),
                 ),
@@ -201,7 +201,7 @@ class _QuickPhraseCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: isDark ? AppTheme.gray800.withOpacity(0.5) : AppTheme.gray100,
+              color: isDark ? AppTheme.gray800.withValues(alpha: 0.5) : AppTheme.gray100,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(

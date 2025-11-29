@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart' as provider;
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 import '../widgets/settings_widgets.dart';
 import '../providers/settings_provider.dart';
@@ -172,6 +173,13 @@ class AboutPage extends StatelessWidget {
 
   const AboutPage({super.key, required this.onBack});
 
+  Future<void> _launchUrl(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -219,7 +227,7 @@ class AboutPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '开源AI助手',
+                          '基于 Flutter 的 AI 聊天助手',
                           style: TextStyle(
                             fontSize: 14,
                             color: AppTheme.gray500,
@@ -233,7 +241,7 @@ class AboutPage extends StatelessWidget {
                     children: [
                       ValueItem(
                         label: '版本',
-                        value: '1.1.2 / 2017',
+                        value: '1.0.0',
                         onTap: () {},
                       ),
                       Padding(
@@ -242,7 +250,7 @@ class AboutPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '系统',
+                              '框架',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
@@ -250,7 +258,7 @@ class AboutPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'Flutter',
+                              'Flutter 3.38.3',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: AppTheme.gray500,
@@ -265,19 +273,20 @@ class AboutPage extends StatelessWidget {
                   SectionGroup(
                     children: [
                       ValueItem(
-                        label: '官网',
-                        icon: Symbols.language,
-                        onTap: () {},
-                      ),
-                      ValueItem(
                         label: 'GitHub',
                         icon: Symbols.code,
-                        onTap: () {},
+                        onTap: () => _launchUrl('https://github.com/anthropics/cometix'),
                       ),
                       ValueItem(
                         label: '许可证',
+                        value: 'MIT',
                         icon: Symbols.description,
-                        onTap: () {},
+                        onTap: () => _launchUrl('https://opensource.org/licenses/MIT'),
+                      ),
+                      ValueItem(
+                        label: '文档',
+                        icon: Symbols.menu_book,
+                        onTap: () => _launchUrl('https://github.com/anthropics/cometix/blob/main/README.md'),
                       ),
                     ],
                   ),
@@ -285,14 +294,14 @@ class AboutPage extends StatelessWidget {
                   SectionGroup(
                     children: [
                       ValueItem(
-                        label: '加入QQ群',
-                        icon: Symbols.group,
-                        onTap: () {},
+                        label: '报告问题',
+                        icon: Symbols.bug_report,
+                        onTap: () => _launchUrl('https://github.com/anthropics/cometix/issues'),
                       ),
                       ValueItem(
-                        label: '在 Discord 中加入我们',
-                        icon: Symbols.forum,
-                        onTap: () {},
+                        label: '贡献代码',
+                        icon: Symbols.code_blocks,
+                        onTap: () => _launchUrl('https://github.com/anthropics/cometix/pulls'),
                       ),
                     ],
                   ),

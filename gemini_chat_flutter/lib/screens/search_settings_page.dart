@@ -99,7 +99,7 @@ class _SearchSettingsPageState extends State<SearchSettingsPage> {
                   // 通用配置
                   shadcn.Card(
                     filled: true,
-                    fillColor: isDark ? AppTheme.gray900.withOpacity(0.3) : Colors.white,
+                    fillColor: isDark ? AppTheme.gray900.withValues(alpha: 0.3) : Colors.white,
                     borderRadius: BorderRadius.circular(12),
                     borderColor: isDark ? AppTheme.gray800 : AppTheme.gray200,
                     borderWidth: 1,
@@ -284,8 +284,8 @@ class _ServiceCard extends StatelessWidget {
       child: shadcn.Card(
         filled: true,
         fillColor: selected
-            ? (isDark ? AppTheme.primaryColor.withOpacity(0.1) : AppTheme.primaryColor.withOpacity(0.05))
-            : (isDark ? AppTheme.gray900.withOpacity(0.3) : Colors.white),
+            ? (isDark ? AppTheme.primaryColor.withValues(alpha: 0.1) : AppTheme.primaryColor.withValues(alpha: 0.05))
+            : (isDark ? AppTheme.gray900.withValues(alpha: 0.3) : Colors.white),
         borderRadius: BorderRadius.circular(16),
         borderColor: selected ? AppTheme.primaryColor : (isDark ? AppTheme.gray800 : AppTheme.gray200),
         borderWidth: selected ? 2 : 1,
@@ -297,7 +297,7 @@ class _ServiceCard extends StatelessWidget {
               width: 24,
               height: 24,
               decoration: BoxDecoration(
-                color: AppTheme.primaryColor.withOpacity(0.2),
+                color: AppTheme.primaryColor.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
               child: Center(
@@ -329,7 +329,7 @@ class _ServiceCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: statusColor.withOpacity(0.1),
+                color: statusColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(

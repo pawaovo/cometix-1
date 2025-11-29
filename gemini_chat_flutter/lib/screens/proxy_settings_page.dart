@@ -63,7 +63,7 @@ class _ProxySettingsPageState extends State<ProxySettingsPage> {
                   // 启用开关
                   shadcn.Card(
                     filled: true,
-                    fillColor: isDark ? AppTheme.gray900.withOpacity(0.3) : Colors.white,
+                    fillColor: isDark ? AppTheme.gray900.withValues(alpha: 0.3) : Colors.white,
                     borderRadius: BorderRadius.circular(12),
                     borderColor: isDark ? AppTheme.gray800 : AppTheme.gray200,
                     borderWidth: 1,
@@ -101,7 +101,7 @@ class _ProxySettingsPageState extends State<ProxySettingsPage> {
                   // 代理配置
                   shadcn.Card(
                     filled: true,
-                    fillColor: isDark ? AppTheme.gray900.withOpacity(0.3) : Colors.white,
+                    fillColor: isDark ? AppTheme.gray900.withValues(alpha: 0.3) : Colors.white,
                     borderRadius: BorderRadius.circular(12),
                     borderColor: isDark ? AppTheme.gray800 : AppTheme.gray200,
                     borderWidth: 1,
@@ -126,7 +126,7 @@ class _ProxySettingsPageState extends State<ProxySettingsPage> {
                             labelText: '代理类型',
                             border: const OutlineInputBorder(),
                             filled: true,
-                            fillColor: isDark ? AppTheme.gray800.withOpacity(0.5) : AppTheme.gray100,
+                            fillColor: isDark ? AppTheme.gray800.withValues(alpha: 0.5) : AppTheme.gray100,
                           ),
                           items: const [
                             DropdownMenuItem(value: ProxyType.http, child: Text('HTTP')),
@@ -150,7 +150,7 @@ class _ProxySettingsPageState extends State<ProxySettingsPage> {
                             border: const OutlineInputBorder(),
                             hintText: '例如: 127.0.0.1',
                             filled: true,
-                            fillColor: isDark ? AppTheme.gray800.withOpacity(0.5) : AppTheme.gray100,
+                            fillColor: isDark ? AppTheme.gray800.withValues(alpha: 0.5) : AppTheme.gray100,
                           ),
                           onChanged: (value) {
                             final updated = config.copyWith(host: value);
@@ -167,7 +167,7 @@ class _ProxySettingsPageState extends State<ProxySettingsPage> {
                             border: const OutlineInputBorder(),
                             hintText: '例如: 8080',
                             filled: true,
-                            fillColor: isDark ? AppTheme.gray800.withOpacity(0.5) : AppTheme.gray100,
+                            fillColor: isDark ? AppTheme.gray800.withValues(alpha: 0.5) : AppTheme.gray100,
                           ),
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
@@ -184,7 +184,7 @@ class _ProxySettingsPageState extends State<ProxySettingsPage> {
                             labelText: '用户名（可选）',
                             border: const OutlineInputBorder(),
                             filled: true,
-                            fillColor: isDark ? AppTheme.gray800.withOpacity(0.5) : AppTheme.gray100,
+                            fillColor: isDark ? AppTheme.gray800.withValues(alpha: 0.5) : AppTheme.gray100,
                           ),
                           onChanged: (value) {
                             final updated = config.copyWith(username: value);
@@ -200,7 +200,7 @@ class _ProxySettingsPageState extends State<ProxySettingsPage> {
                             labelText: '密码（可选）',
                             border: const OutlineInputBorder(),
                             filled: true,
-                            fillColor: isDark ? AppTheme.gray800.withOpacity(0.5) : AppTheme.gray100,
+                            fillColor: isDark ? AppTheme.gray800.withValues(alpha: 0.5) : AppTheme.gray100,
                           ),
                           obscureText: true,
                           onChanged: (value) {
@@ -241,9 +241,9 @@ class _ProxySettingsPageState extends State<ProxySettingsPage> {
                   // 说明
                   shadcn.Card(
                     filled: true,
-                    fillColor: Colors.blue.withOpacity(0.1),
+                    fillColor: Colors.blue.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
-                    borderColor: Colors.blue.withOpacity(0.3),
+                    borderColor: Colors.blue.withValues(alpha: 0.3),
                     borderWidth: 1,
                     padding: const EdgeInsets.all(12),
                     child: Row(

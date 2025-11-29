@@ -246,7 +246,7 @@ class _ModelCard extends StatelessWidget {
 
     return shadcn.Card(
       filled: true,
-      fillColor: isDark ? AppTheme.gray900.withOpacity(0.3) : Colors.white,
+      fillColor: isDark ? AppTheme.gray900.withValues(alpha: 0.3) : Colors.white,
       borderRadius: BorderRadius.circular(16),
       borderColor: isDark ? AppTheme.gray800 : AppTheme.gray200,
       borderWidth: 1,
@@ -300,7 +300,7 @@ class _ModelCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               decoration: BoxDecoration(
-                color: isDark ? AppTheme.gray800.withOpacity(0.5) : AppTheme.gray100,
+                color: isDark ? AppTheme.gray800.withValues(alpha: 0.5) : AppTheme.gray100,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -309,7 +309,7 @@ class _ModelCard extends StatelessWidget {
                     width: 24,
                     height: 24,
                     decoration: BoxDecoration(
-                      color: AppTheme.primaryColor.withOpacity(0.2),
+                      color: AppTheme.primaryColor.withValues(alpha: 0.2),
                       shape: BoxShape.circle,
                     ),
                     child: Center(
