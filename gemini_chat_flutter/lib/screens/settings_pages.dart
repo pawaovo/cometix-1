@@ -1,79 +1,157 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:provider/provider.dart' as provider;
 import '../theme/app_theme.dart';
 import '../widgets/settings_widgets.dart';
+import '../providers/settings_provider.dart';
+import '../providers/assistant_provider.dart';
+import '../models/assistant.dart';
 
 /// Display settings page (Theme and Language)
-class DisplaySettingsPage extends StatefulWidget {
+class DisplaySettingsPage extends StatelessWidget {
   final VoidCallback onBack;
 
   const DisplaySettingsPage({super.key, required this.onBack});
 
   @override
-  State<DisplaySettingsPage> createState() => _DisplaySettingsPageState();
-}
-
-class _DisplaySettingsPageState extends State<DisplaySettingsPage> {
-  String _theme = '跟随系统';
-  String _language = '跟随系统';
-
-  @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final settings = provider.Provider.of<SettingsProvider>(context);
 
     return Scaffold(
       backgroundColor: isDark ? AppTheme.backgroundDark : AppTheme.backgroundLight,
       body: SafeArea(
         child: Column(
           children: [
-            SettingsHeader(title: '显示', onBack: widget.onBack),
+            SettingsHeader(title: '显示', onBack: onBack),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: [
+                  // 主题设置
                   SectionGroup(
                     title: '主题设置',
                     children: [
                       SelectionItem(
                         label: '浅色',
-                        selected: _theme == '浅色',
-                        onTap: () => setState(() => _theme = '浅色'),
+                        selected: settings.themeMode == ThemeMode.light,
+                        onTap: () => settings.setThemeMode(ThemeMode.light),
                       ),
                       SelectionItem(
                         label: '深色',
-                        selected: _theme == '深色',
-                        onTap: () => setState(() => _theme = '深色'),
+                        selected: settings.themeMode == ThemeMode.dark,
+                        onTap: () => settings.setThemeMode(ThemeMode.dark),
                       ),
                       SelectionItem(
                         label: '跟随系统',
-                        selected: _theme == '跟随系统',
-                        onTap: () => setState(() => _theme = '跟随系统'),
+                        selected: settings.themeMode == ThemeMode.system,
+                        onTap: () => settings.setThemeMode(ThemeMode.system),
                       ),
                     ],
                   ),
                   const SizedBox(height: 16),
+
+                  // 语言设置
                   SectionGroup(
                     title: '语言设置',
                     children: [
                       SelectionItem(
                         label: '简体中文',
-                        selected: _language == '简体中文',
-                        onTap: () => setState(() => _language = '简体中文'),
+                        selected: settings.appLocale == 'zh_CN',
+                        onTap: () => settings.setAppLocale('zh_CN'),
                       ),
                       SelectionItem(
                         label: '繁体中文',
-                        selected: _language == '繁体中文',
-                        onTap: () => setState(() => _language = '繁体中文'),
+                        selected: settings.appLocale == 'zh_TW',
+                        onTap: () => settings.setAppLocale('zh_TW'),
                       ),
                       SelectionItem(
                         label: '英文',
-                        selected: _language == '英文',
-                        onTap: () => setState(() => _language = '英文'),
+                        selected: settings.appLocale == 'en',
+                        onTap: () => settings.setAppLocale('en'),
                       ),
                       SelectionItem(
                         label: '跟随系统',
-                        selected: _language == '跟随系统',
-                        onTap: () => setState(() => _language = '跟随系统'),
+                        selected: settings.appLocale == null,
+                        onTap: () => settings.setAppLocale(null),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // 字体设置
+                  SectionGroup(
+                    title: '字体设置',
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '字体大小',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: isDark ? AppTheme.gray100 : AppTheme.gray900,
+                                  ),
+                                ),
+                                Text(
+                                  '${(settings.chatFontScale * 100).toInt()}%',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: AppTheme.gray500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            Slider(
+                              value: settings.chatFontScale,
+                              min: 0.8,
+                              max: 1.5,
+                              divisions: 14,
+                              activeColor: AppTheme.primaryColor,
+                              onChanged: (value) => settings.setChatFontScale(value),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // 显示选项
+                  SectionGroup(
+                    title: '显示选项',
+                    children: [
+                      ToggleItem(
+                        label: '显示用户头像',
+                        checked: settings.showUserAvatar,
+                        onChange: settings.setShowUserAvatar,
+                      ),
+                      ToggleItem(
+                        label: '显示模型图标',
+                        checked: settings.showModelIcon,
+                        onChange: settings.setShowModelIcon,
+                      ),
+                      ToggleItem(
+                        label: '显示时间戳',
+                        checked: settings.showTimestamp,
+                        onChange: settings.setShowTimestamp,
+                      ),
+                      ToggleItem(
+                        label: '启用 Markdown 渲染',
+                        checked: settings.enableMarkdown,
+                        onChange: settings.setEnableMarkdown,
+                      ),
+                      ToggleItem(
+                        label: '自动滚动到底部',
+                        checked: settings.autoScroll,
+                        onChange: settings.setAutoScroll,
                       ),
                     ],
                   ),
@@ -706,58 +784,29 @@ class DocsPage extends StatelessWidget {
 }
 
 // Placeholder pages for other settings
-class AssistantSettingsPage extends StatefulWidget {
+class AssistantSettingsPage extends StatelessWidget {
   final VoidCallback onBack;
   const AssistantSettingsPage({super.key, required this.onBack});
 
-  @override
-  State<AssistantSettingsPage> createState() => _AssistantSettingsPageState();
-}
-
-class _AssistantSettingsPageState extends State<AssistantSettingsPage> {
-  final List<Map<String, dynamic>> _assistants = [
-    {
-      'name': '默认助手',
-      'description': '通用AI助手，适用于各种场景',
-      'enabled': true,
-    },
-    {
-      'name': '代码助手',
-      'description': '专注于编程和代码相关的任务',
-      'enabled': true,
-    },
-    {
-      'name': '写作助手',
-      'description': '帮助你进行创意写作和文案创作',
-      'enabled': false,
-    },
-  ];
-
-  void _toggleAssistant(int index) {
-    setState(() {
-      _assistants[index]['enabled'] = !_assistants[index]['enabled'];
-    });
-  }
-
-  void _addAssistant() {
-    setState(() {
-      _assistants.add({
-        'name': '新助手',
-        'description': '描述你的助手',
-        'enabled': true,
-      });
-    });
-  }
-
-  void _deleteAssistant(int index) {
-    setState(() {
-      _assistants.removeAt(index);
-    });
+  void _addAssistant(BuildContext context) {
+    final assistantProvider = provider.Provider.of<AssistantProvider>(context, listen: false);
+    final newId = 'assistant_${DateTime.now().millisecondsSinceEpoch}';
+    assistantProvider.addAssistant(
+      Assistant(
+        id: newId,
+        name: '新助手',
+        description: '描述你的助手',
+        systemPrompt: '',
+        enabled: true,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final assistantProvider = provider.Provider.of<AssistantProvider>(context);
+    final assistants = assistantProvider.assistants;
 
     return Scaffold(
       backgroundColor: isDark ? AppTheme.backgroundDark : AppTheme.backgroundLight,
@@ -766,15 +815,15 @@ class _AssistantSettingsPageState extends State<AssistantSettingsPage> {
           children: [
             SettingsHeader(
               title: '助手',
-              onBack: widget.onBack,
+              onBack: onBack,
               actionIcon: Symbols.add,
-              onAction: _addAssistant,
+              onAction: () => _addAssistant(context),
             ),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: [
-                  if (_assistants.isEmpty)
+                  if (assistants.isEmpty)
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.all(32),
@@ -798,9 +847,7 @@ class _AssistantSettingsPageState extends State<AssistantSettingsPage> {
                       ),
                     )
                   else
-                    ..._assistants.asMap().entries.map((entry) {
-                      final index = entry.key;
-                      final assistant = entry.value;
+                    ...assistants.map((assistant) {
                       return Container(
                         margin: const EdgeInsets.only(bottom: 12),
                         decoration: BoxDecoration(
@@ -819,30 +866,32 @@ class _AssistantSettingsPageState extends State<AssistantSettingsPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      assistant['name'],
+                                      assistant.name,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500,
                                         color: isDark ? AppTheme.gray100 : AppTheme.gray900,
                                       ),
                                     ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      assistant['description'],
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        color: AppTheme.gray500,
+                                    if (assistant.description != null) ...[
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        assistant.description!,
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: AppTheme.gray500,
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ],
                                 ),
                               ),
                               ToggleSwitch(
-                                checked: assistant['enabled'],
-                                onChange: (v) => _toggleAssistant(index),
+                                checked: assistant.enabled,
+                                onChange: (v) => assistantProvider.toggleAssistant(assistant.id),
                               ),
                               IconButton(
-                                onPressed: () => _deleteAssistant(index),
+                                onPressed: () => assistantProvider.deleteAssistant(assistant.id),
                                 icon: Icon(
                                   Symbols.delete,
                                   size: 20,
