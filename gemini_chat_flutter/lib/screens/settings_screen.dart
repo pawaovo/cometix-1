@@ -3,6 +3,8 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 import '../theme/app_theme.dart';
 import 'settings_pages.dart';
+import 'backup_settings_page.dart';
+import 'chat_storage_page.dart';
 
 enum SettingsSubPage {
   none,
