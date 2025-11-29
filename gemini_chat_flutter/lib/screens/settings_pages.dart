@@ -6,6 +6,7 @@ import '../widgets/settings_widgets.dart';
 import '../providers/settings_provider.dart';
 import '../providers/assistant_provider.dart';
 import '../models/assistant.dart';
+import 'assistant_edit_page.dart';
 
 /// Display settings page (Theme and Language)
 class DisplaySettingsPage extends StatelessWidget {
@@ -740,6 +741,20 @@ class AssistantSettingsPage extends StatelessWidget {
                                       ),
                                     ],
                                   ],
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => AssistantEditPage(assistantId: assistant.id),
+                                    ),
+                                  );
+                                },
+                                icon: Icon(
+                                  Symbols.edit,
+                                  size: 20,
+                                  color: AppTheme.gray400,
                                 ),
                               ),
                               ToggleSwitch(

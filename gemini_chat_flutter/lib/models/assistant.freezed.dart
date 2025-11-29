@@ -25,7 +25,13 @@ mixin _$Assistant {
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String get systemPrompt => throw _privateConstructorUsedError;
-  bool get enabled => throw _privateConstructorUsedError;
+  bool get enabled => throw _privateConstructorUsedError; // 模型配置
+  String? get modelProvider => throw _privateConstructorUsedError;
+  String? get modelId => throw _privateConstructorUsedError; // 参数配置
+  double get temperature => throw _privateConstructorUsedError;
+  double get topP => throw _privateConstructorUsedError;
+  int get contextMessageCount => throw _privateConstructorUsedError; // 输出配置
+  bool get streamOutput => throw _privateConstructorUsedError;
 
   /// Serializes this Assistant to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,6 +54,12 @@ abstract class $AssistantCopyWith<$Res> {
     String? description,
     String systemPrompt,
     bool enabled,
+    String? modelProvider,
+    String? modelId,
+    double temperature,
+    double topP,
+    int contextMessageCount,
+    bool streamOutput,
   });
 }
 
@@ -71,6 +83,12 @@ class _$AssistantCopyWithImpl<$Res, $Val extends Assistant>
     Object? description = freezed,
     Object? systemPrompt = null,
     Object? enabled = null,
+    Object? modelProvider = freezed,
+    Object? modelId = freezed,
+    Object? temperature = null,
+    Object? topP = null,
+    Object? contextMessageCount = null,
+    Object? streamOutput = null,
   }) {
     return _then(
       _value.copyWith(
@@ -94,6 +112,30 @@ class _$AssistantCopyWithImpl<$Res, $Val extends Assistant>
                 ? _value.enabled
                 : enabled // ignore: cast_nullable_to_non_nullable
                       as bool,
+            modelProvider: freezed == modelProvider
+                ? _value.modelProvider
+                : modelProvider // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            modelId: freezed == modelId
+                ? _value.modelId
+                : modelId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            temperature: null == temperature
+                ? _value.temperature
+                : temperature // ignore: cast_nullable_to_non_nullable
+                      as double,
+            topP: null == topP
+                ? _value.topP
+                : topP // ignore: cast_nullable_to_non_nullable
+                      as double,
+            contextMessageCount: null == contextMessageCount
+                ? _value.contextMessageCount
+                : contextMessageCount // ignore: cast_nullable_to_non_nullable
+                      as int,
+            streamOutput: null == streamOutput
+                ? _value.streamOutput
+                : streamOutput // ignore: cast_nullable_to_non_nullable
+                      as bool,
           )
           as $Val,
     );
@@ -115,6 +157,12 @@ abstract class _$$AssistantImplCopyWith<$Res>
     String? description,
     String systemPrompt,
     bool enabled,
+    String? modelProvider,
+    String? modelId,
+    double temperature,
+    double topP,
+    int contextMessageCount,
+    bool streamOutput,
   });
 }
 
@@ -137,6 +185,12 @@ class __$$AssistantImplCopyWithImpl<$Res>
     Object? description = freezed,
     Object? systemPrompt = null,
     Object? enabled = null,
+    Object? modelProvider = freezed,
+    Object? modelId = freezed,
+    Object? temperature = null,
+    Object? topP = null,
+    Object? contextMessageCount = null,
+    Object? streamOutput = null,
   }) {
     return _then(
       _$AssistantImpl(
@@ -160,6 +214,30 @@ class __$$AssistantImplCopyWithImpl<$Res>
             ? _value.enabled
             : enabled // ignore: cast_nullable_to_non_nullable
                   as bool,
+        modelProvider: freezed == modelProvider
+            ? _value.modelProvider
+            : modelProvider // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        modelId: freezed == modelId
+            ? _value.modelId
+            : modelId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        temperature: null == temperature
+            ? _value.temperature
+            : temperature // ignore: cast_nullable_to_non_nullable
+                  as double,
+        topP: null == topP
+            ? _value.topP
+            : topP // ignore: cast_nullable_to_non_nullable
+                  as double,
+        contextMessageCount: null == contextMessageCount
+            ? _value.contextMessageCount
+            : contextMessageCount // ignore: cast_nullable_to_non_nullable
+                  as int,
+        streamOutput: null == streamOutput
+            ? _value.streamOutput
+            : streamOutput // ignore: cast_nullable_to_non_nullable
+                  as bool,
       ),
     );
   }
@@ -174,6 +252,12 @@ class _$AssistantImpl implements _Assistant {
     this.description,
     this.systemPrompt = '',
     this.enabled = true,
+    this.modelProvider,
+    this.modelId,
+    this.temperature = 0.7,
+    this.topP = 1.0,
+    this.contextMessageCount = 10,
+    this.streamOutput = true,
   });
 
   factory _$AssistantImpl.fromJson(Map<String, dynamic> json) =>
@@ -191,10 +275,29 @@ class _$AssistantImpl implements _Assistant {
   @override
   @JsonKey()
   final bool enabled;
+  // 模型配置
+  @override
+  final String? modelProvider;
+  @override
+  final String? modelId;
+  // 参数配置
+  @override
+  @JsonKey()
+  final double temperature;
+  @override
+  @JsonKey()
+  final double topP;
+  @override
+  @JsonKey()
+  final int contextMessageCount;
+  // 输出配置
+  @override
+  @JsonKey()
+  final bool streamOutput;
 
   @override
   String toString() {
-    return 'Assistant(id: $id, name: $name, description: $description, systemPrompt: $systemPrompt, enabled: $enabled)';
+    return 'Assistant(id: $id, name: $name, description: $description, systemPrompt: $systemPrompt, enabled: $enabled, modelProvider: $modelProvider, modelId: $modelId, temperature: $temperature, topP: $topP, contextMessageCount: $contextMessageCount, streamOutput: $streamOutput)';
   }
 
   @override
@@ -208,13 +311,35 @@ class _$AssistantImpl implements _Assistant {
                 other.description == description) &&
             (identical(other.systemPrompt, systemPrompt) ||
                 other.systemPrompt == systemPrompt) &&
-            (identical(other.enabled, enabled) || other.enabled == enabled));
+            (identical(other.enabled, enabled) || other.enabled == enabled) &&
+            (identical(other.modelProvider, modelProvider) ||
+                other.modelProvider == modelProvider) &&
+            (identical(other.modelId, modelId) || other.modelId == modelId) &&
+            (identical(other.temperature, temperature) ||
+                other.temperature == temperature) &&
+            (identical(other.topP, topP) || other.topP == topP) &&
+            (identical(other.contextMessageCount, contextMessageCount) ||
+                other.contextMessageCount == contextMessageCount) &&
+            (identical(other.streamOutput, streamOutput) ||
+                other.streamOutput == streamOutput));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, description, systemPrompt, enabled);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    name,
+    description,
+    systemPrompt,
+    enabled,
+    modelProvider,
+    modelId,
+    temperature,
+    topP,
+    contextMessageCount,
+    streamOutput,
+  );
 
   /// Create a copy of Assistant
   /// with the given fields replaced by the non-null parameter values.
@@ -237,6 +362,12 @@ abstract class _Assistant implements Assistant {
     final String? description,
     final String systemPrompt,
     final bool enabled,
+    final String? modelProvider,
+    final String? modelId,
+    final double temperature,
+    final double topP,
+    final int contextMessageCount,
+    final bool streamOutput,
   }) = _$AssistantImpl;
 
   factory _Assistant.fromJson(Map<String, dynamic> json) =
@@ -251,7 +382,19 @@ abstract class _Assistant implements Assistant {
   @override
   String get systemPrompt;
   @override
-  bool get enabled;
+  bool get enabled; // 模型配置
+  @override
+  String? get modelProvider;
+  @override
+  String? get modelId; // 参数配置
+  @override
+  double get temperature;
+  @override
+  double get topP;
+  @override
+  int get contextMessageCount; // 输出配置
+  @override
+  bool get streamOutput;
 
   /// Create a copy of Assistant
   /// with the given fields replaced by the non-null parameter values.
