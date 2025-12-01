@@ -47,6 +47,21 @@ class SettingsProvider extends ChangeNotifier {
   // WebDAV 备份相关
   static const String _webDavConfigKey = 'webdav_config_v1';
 
+  // 主题色板相关
+  static const String _themePaletteIdKey = 'theme_palette_id_v1';
+  static const String _customPalettesKey = 'custom_palettes_v1';
+
+  // 触感反馈相关
+  static const String _hapticEnabledKey = 'haptic_enabled_v1';
+  static const String _hapticIntensityKey = 'haptic_intensity_v1';
+
+  // TTS 相关
+  static const String _ttsEnabledKey = 'tts_enabled_v1';
+  static const String _ttsLanguageKey = 'tts_language_v1';
+  static const String _ttsSpeechRateKey = 'tts_speech_rate_v1';
+  static const String _ttsVolumeKey = 'tts_volume_v1';
+  static const String _ttsPitchKey = 'tts_pitch_v1';
+
   // ===== 基础设置字段 =====
   ThemeMode _themeMode = ThemeMode.system;
   String? _appLocale;
@@ -89,6 +104,21 @@ class SettingsProvider extends ChangeNotifier {
 
   // ===== WebDAV 备份设置字段 =====
   WebDavConfig _webDavConfig = const WebDavConfig();
+
+  // ===== 主题色板设置字段 =====
+  String _themePaletteId = 'default';
+  List<Map<String, dynamic>> _customPalettes = [];
+
+  // ===== 触感反馈设置字段 =====
+  bool _hapticEnabled = true;
+  String _hapticIntensity = 'medium';
+
+  // ===== TTS 设置字段 =====
+  bool _ttsEnabled = false;
+  String _ttsLanguage = 'zh-CN';
+  double _ttsSpeechRate = 0.5;
+  double _ttsVolume = 1.0;
+  double _ttsPitch = 1.0;
 
   // ===== Getters - 基础设置 =====
   ThemeMode get themeMode => _themeMode;
@@ -147,6 +177,21 @@ class SettingsProvider extends ChangeNotifier {
 
   // ===== Getters - WebDAV 备份设置 =====
   WebDavConfig get webDavConfig => _webDavConfig;
+
+  // ===== Getters - 主题色板设置 =====
+  String get themePaletteId => _themePaletteId;
+  List<Map<String, dynamic>> get customPalettes => List.unmodifiable(_customPalettes);
+
+  // ===== Getters - 触感反馈设置 =====
+  bool get hapticEnabled => _hapticEnabled;
+  String get hapticIntensity => _hapticIntensity;
+
+  // ===== Getters - TTS 设置 =====
+  bool get ttsEnabled => _ttsEnabled;
+  String get ttsLanguage => _ttsLanguage;
+  double get ttsSpeechRate => _ttsSpeechRate;
+  double get ttsVolume => _ttsVolume;
+  double get ttsPitch => _ttsPitch;
 
   // ===== 默认 Prompt =====
   static const String defaultTitlePrompt = '''请为以下对话生成一个简短的标题（不超过20个字）：
@@ -290,6 +335,29 @@ class SettingsProvider extends ChangeNotifier {
         }
       }
 
+      // 加载主题色板设置
+      _themePaletteId = prefs.getString(_themePaletteIdKey) ?? 'default';
+      final customPalettesStr = prefs.getString(_customPalettesKey);
+      if (customPalettesStr != null && customPalettesStr.isNotEmpty) {
+        try {
+          final raw = jsonDecode(customPalettesStr) as List<dynamic>;
+          _customPalettes = raw.cast<Map<String, dynamic>>();
+        } catch (e) {
+          debugPrint('加载自定义色板失败: $e');
+        }
+      }
+
+      // 加载触感反馈设置
+      _hapticEnabled = prefs.getBool(_hapticEnabledKey) ?? true;
+      _hapticIntensity = prefs.getString(_hapticIntensityKey) ?? 'medium';
+
+      // 加载 TTS 设置
+      _ttsEnabled = prefs.getBool(_ttsEnabledKey) ?? false;
+      _ttsLanguage = prefs.getString(_ttsLanguageKey) ?? 'zh-CN';
+      _ttsSpeechRate = prefs.getDouble(_ttsSpeechRateKey) ?? 0.5;
+      _ttsVolume = prefs.getDouble(_ttsVolumeKey) ?? 1.0;
+      _ttsPitch = prefs.getDouble(_ttsPitchKey) ?? 1.0;
+
       notifyListeners();
     } catch (e) {
       debugPrint('加载设置失败: $e');
@@ -356,6 +424,24 @@ class SettingsProvider extends ChangeNotifier {
       // 保存 WebDAV 配置
       final webDavJson = jsonEncode(_webDavConfig.toJson());
       await prefs.setString(_webDavConfigKey, webDavJson);
+
+      // 保存主题色板设置
+      await prefs.setString(_themePaletteIdKey, _themePaletteId);
+      if (_customPalettes.isNotEmpty) {
+        final customPalettesJson = jsonEncode(_customPalettes);
+        await prefs.setString(_customPalettesKey, customPalettesJson);
+      }
+
+      // 保存触感反馈设置
+      await prefs.setBool(_hapticEnabledKey, _hapticEnabled);
+      await prefs.setString(_hapticIntensityKey, _hapticIntensity);
+
+      // 保存 TTS 设置
+      await prefs.setBool(_ttsEnabledKey, _ttsEnabled);
+      await prefs.setString(_ttsLanguageKey, _ttsLanguage);
+      await prefs.setDouble(_ttsSpeechRateKey, _ttsSpeechRate);
+      await prefs.setDouble(_ttsVolumeKey, _ttsVolume);
+      await prefs.setDouble(_ttsPitchKey, _ttsPitch);
     } catch (e) {
       debugPrint('保存设置失败: $e');
     }
@@ -603,6 +689,71 @@ class SettingsProvider extends ChangeNotifier {
   // ===== WebDAV 备份管理方法 =====
   Future<void> setWebDavConfig(WebDavConfig config) async {
     _webDavConfig = config;
+    notifyListeners();
+    await _save();
+  }
+
+  // ===== 主题色板管理方法 =====
+  Future<void> setThemePalette(String paletteId) async {
+    _themePaletteId = paletteId;
+    notifyListeners();
+    await _save();
+  }
+
+  Future<void> addCustomPalette(Map<String, dynamic> palette) async {
+    _customPalettes = List.from(_customPalettes)..add(palette);
+    notifyListeners();
+    await _save();
+  }
+
+  Future<void> removeCustomPalette(int index) async {
+    if (index >= 0 && index < _customPalettes.length) {
+      _customPalettes = List.from(_customPalettes)..removeAt(index);
+      notifyListeners();
+      await _save();
+    }
+  }
+
+  // ===== 触感反馈管理方法 =====
+  Future<void> setHapticEnabled(bool enabled) async {
+    _hapticEnabled = enabled;
+    notifyListeners();
+    await _save();
+  }
+
+  Future<void> setHapticIntensity(String intensity) async {
+    _hapticIntensity = intensity;
+    notifyListeners();
+    await _save();
+  }
+
+  // ===== TTS 管理方法 =====
+  Future<void> setTtsEnabled(bool enabled) async {
+    _ttsEnabled = enabled;
+    notifyListeners();
+    await _save();
+  }
+
+  Future<void> setTtsLanguage(String language) async {
+    _ttsLanguage = language;
+    notifyListeners();
+    await _save();
+  }
+
+  Future<void> setTtsSpeechRate(double rate) async {
+    _ttsSpeechRate = rate;
+    notifyListeners();
+    await _save();
+  }
+
+  Future<void> setTtsVolume(double volume) async {
+    _ttsVolume = volume;
+    notifyListeners();
+    await _save();
+  }
+
+  Future<void> setTtsPitch(double pitch) async {
+    _ttsPitch = pitch;
     notifyListeners();
     await _save();
   }

@@ -5,10 +5,16 @@ import '../theme/app_theme.dart';
 import 'settings_pages.dart';
 import 'backup_settings_page.dart';
 import 'chat_storage_page.dart';
+import 'theme_palette_page.dart';
+import 'haptic_settings_page.dart';
+import 'tts_settings_page.dart';
 
 enum SettingsSubPage {
   none,
   display,
+  themePalette,
+  haptic,
+  tts,
   assistant,
   defaultModel,
   providers,
@@ -110,6 +116,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         value: '跟随系统',
                         isDark: isDark,
                         onTap: () => _navigateToSubPage(SettingsSubPage.display),
+                      ),
+                      _buildDivider(isDark),
+                      _buildSettingItem(
+                        context,
+                        icon: Symbols.palette,
+                        title: '主题色板',
+                        value: '默认',
+                        isDark: isDark,
+                        onTap: () => _navigateToSubPage(SettingsSubPage.themePalette),
+                      ),
+                      _buildDivider(isDark),
+                      _buildSettingItem(
+                        context,
+                        icon: Symbols.vibration,
+                        title: '触感反馈',
+                        value: '中等',
+                        isDark: isDark,
+                        onTap: () => _navigateToSubPage(SettingsSubPage.haptic),
+                      ),
+                      _buildDivider(isDark),
+                      _buildSettingItem(
+                        context,
+                        icon: Symbols.volume_up,
+                        title: '语音朗读',
+                        value: '关',
+                        isDark: isDark,
+                        onTap: () => _navigateToSubPage(SettingsSubPage.tts),
                       ),
                       _buildDivider(isDark),
                       _buildSettingItem(
@@ -372,6 +405,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     switch (_currentSubPage) {
       case SettingsSubPage.display:
         return DisplaySettingsPage(onBack: _navigateBack);
+      case SettingsSubPage.themePalette:
+        return ThemePalettePage(onBack: _navigateBack);
+      case SettingsSubPage.haptic:
+        return HapticSettingsPage(onBack: _navigateBack);
+      case SettingsSubPage.tts:
+        return TTSSettingsPage(onBack: _navigateBack);
       case SettingsSubPage.assistant:
         return AssistantSettingsPage(onBack: _navigateBack);
       case SettingsSubPage.defaultModel:

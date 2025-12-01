@@ -31,7 +31,11 @@ mixin _$Assistant {
   double get temperature => throw _privateConstructorUsedError;
   double get topP => throw _privateConstructorUsedError;
   int get contextMessageCount => throw _privateConstructorUsedError; // 输出配置
-  bool get streamOutput => throw _privateConstructorUsedError;
+  bool get streamOutput => throw _privateConstructorUsedError; // 记忆配置
+  bool get enableMemory => throw _privateConstructorUsedError;
+  bool get useHistoryChat => throw _privateConstructorUsedError;
+  List<String> get memories => throw _privateConstructorUsedError; // 助手专属快捷短语
+  List<String> get quickPhrases => throw _privateConstructorUsedError;
 
   /// Serializes this Assistant to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -60,6 +64,10 @@ abstract class $AssistantCopyWith<$Res> {
     double topP,
     int contextMessageCount,
     bool streamOutput,
+    bool enableMemory,
+    bool useHistoryChat,
+    List<String> memories,
+    List<String> quickPhrases,
   });
 }
 
@@ -89,6 +97,10 @@ class _$AssistantCopyWithImpl<$Res, $Val extends Assistant>
     Object? topP = null,
     Object? contextMessageCount = null,
     Object? streamOutput = null,
+    Object? enableMemory = null,
+    Object? useHistoryChat = null,
+    Object? memories = null,
+    Object? quickPhrases = null,
   }) {
     return _then(
       _value.copyWith(
@@ -136,6 +148,22 @@ class _$AssistantCopyWithImpl<$Res, $Val extends Assistant>
                 ? _value.streamOutput
                 : streamOutput // ignore: cast_nullable_to_non_nullable
                       as bool,
+            enableMemory: null == enableMemory
+                ? _value.enableMemory
+                : enableMemory // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            useHistoryChat: null == useHistoryChat
+                ? _value.useHistoryChat
+                : useHistoryChat // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            memories: null == memories
+                ? _value.memories
+                : memories // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+            quickPhrases: null == quickPhrases
+                ? _value.quickPhrases
+                : quickPhrases // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
           )
           as $Val,
     );
@@ -163,6 +191,10 @@ abstract class _$$AssistantImplCopyWith<$Res>
     double topP,
     int contextMessageCount,
     bool streamOutput,
+    bool enableMemory,
+    bool useHistoryChat,
+    List<String> memories,
+    List<String> quickPhrases,
   });
 }
 
@@ -191,6 +223,10 @@ class __$$AssistantImplCopyWithImpl<$Res>
     Object? topP = null,
     Object? contextMessageCount = null,
     Object? streamOutput = null,
+    Object? enableMemory = null,
+    Object? useHistoryChat = null,
+    Object? memories = null,
+    Object? quickPhrases = null,
   }) {
     return _then(
       _$AssistantImpl(
@@ -238,6 +274,22 @@ class __$$AssistantImplCopyWithImpl<$Res>
             ? _value.streamOutput
             : streamOutput // ignore: cast_nullable_to_non_nullable
                   as bool,
+        enableMemory: null == enableMemory
+            ? _value.enableMemory
+            : enableMemory // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        useHistoryChat: null == useHistoryChat
+            ? _value.useHistoryChat
+            : useHistoryChat // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        memories: null == memories
+            ? _value._memories
+            : memories // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        quickPhrases: null == quickPhrases
+            ? _value._quickPhrases
+            : quickPhrases // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
       ),
     );
   }
@@ -258,7 +310,12 @@ class _$AssistantImpl implements _Assistant {
     this.topP = 1.0,
     this.contextMessageCount = 10,
     this.streamOutput = true,
-  });
+    this.enableMemory = false,
+    this.useHistoryChat = false,
+    final List<String> memories = const [],
+    final List<String> quickPhrases = const [],
+  }) : _memories = memories,
+       _quickPhrases = quickPhrases;
 
   factory _$AssistantImpl.fromJson(Map<String, dynamic> json) =>
       _$$AssistantImplFromJson(json);
@@ -294,10 +351,36 @@ class _$AssistantImpl implements _Assistant {
   @override
   @JsonKey()
   final bool streamOutput;
+  // 记忆配置
+  @override
+  @JsonKey()
+  final bool enableMemory;
+  @override
+  @JsonKey()
+  final bool useHistoryChat;
+  final List<String> _memories;
+  @override
+  @JsonKey()
+  List<String> get memories {
+    if (_memories is EqualUnmodifiableListView) return _memories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_memories);
+  }
+
+  // 助手专属快捷短语
+  final List<String> _quickPhrases;
+  // 助手专属快捷短语
+  @override
+  @JsonKey()
+  List<String> get quickPhrases {
+    if (_quickPhrases is EqualUnmodifiableListView) return _quickPhrases;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_quickPhrases);
+  }
 
   @override
   String toString() {
-    return 'Assistant(id: $id, name: $name, description: $description, systemPrompt: $systemPrompt, enabled: $enabled, modelProvider: $modelProvider, modelId: $modelId, temperature: $temperature, topP: $topP, contextMessageCount: $contextMessageCount, streamOutput: $streamOutput)';
+    return 'Assistant(id: $id, name: $name, description: $description, systemPrompt: $systemPrompt, enabled: $enabled, modelProvider: $modelProvider, modelId: $modelId, temperature: $temperature, topP: $topP, contextMessageCount: $contextMessageCount, streamOutput: $streamOutput, enableMemory: $enableMemory, useHistoryChat: $useHistoryChat, memories: $memories, quickPhrases: $quickPhrases)';
   }
 
   @override
@@ -321,7 +404,16 @@ class _$AssistantImpl implements _Assistant {
             (identical(other.contextMessageCount, contextMessageCount) ||
                 other.contextMessageCount == contextMessageCount) &&
             (identical(other.streamOutput, streamOutput) ||
-                other.streamOutput == streamOutput));
+                other.streamOutput == streamOutput) &&
+            (identical(other.enableMemory, enableMemory) ||
+                other.enableMemory == enableMemory) &&
+            (identical(other.useHistoryChat, useHistoryChat) ||
+                other.useHistoryChat == useHistoryChat) &&
+            const DeepCollectionEquality().equals(other._memories, _memories) &&
+            const DeepCollectionEquality().equals(
+              other._quickPhrases,
+              _quickPhrases,
+            ));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -339,6 +431,10 @@ class _$AssistantImpl implements _Assistant {
     topP,
     contextMessageCount,
     streamOutput,
+    enableMemory,
+    useHistoryChat,
+    const DeepCollectionEquality().hash(_memories),
+    const DeepCollectionEquality().hash(_quickPhrases),
   );
 
   /// Create a copy of Assistant
@@ -368,6 +464,10 @@ abstract class _Assistant implements Assistant {
     final double topP,
     final int contextMessageCount,
     final bool streamOutput,
+    final bool enableMemory,
+    final bool useHistoryChat,
+    final List<String> memories,
+    final List<String> quickPhrases,
   }) = _$AssistantImpl;
 
   factory _Assistant.fromJson(Map<String, dynamic> json) =
@@ -394,7 +494,15 @@ abstract class _Assistant implements Assistant {
   @override
   int get contextMessageCount; // 输出配置
   @override
-  bool get streamOutput;
+  bool get streamOutput; // 记忆配置
+  @override
+  bool get enableMemory;
+  @override
+  bool get useHistoryChat;
+  @override
+  List<String> get memories; // 助手专属快捷短语
+  @override
+  List<String> get quickPhrases;
 
   /// Create a copy of Assistant
   /// with the given fields replaced by the non-null parameter values.

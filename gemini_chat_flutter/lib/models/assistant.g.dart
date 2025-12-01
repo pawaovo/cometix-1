@@ -19,6 +19,18 @@ _$AssistantImpl _$$AssistantImplFromJson(Map<String, dynamic> json) =>
       topP: (json['topP'] as num?)?.toDouble() ?? 1.0,
       contextMessageCount: (json['contextMessageCount'] as num?)?.toInt() ?? 10,
       streamOutput: json['streamOutput'] as bool? ?? true,
+      enableMemory: json['enableMemory'] as bool? ?? false,
+      useHistoryChat: json['useHistoryChat'] as bool? ?? false,
+      memories:
+          (json['memories'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      quickPhrases:
+          (json['quickPhrases'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$AssistantImplToJson(_$AssistantImpl instance) =>
@@ -34,4 +46,8 @@ Map<String, dynamic> _$$AssistantImplToJson(_$AssistantImpl instance) =>
       'topP': instance.topP,
       'contextMessageCount': instance.contextMessageCount,
       'streamOutput': instance.streamOutput,
+      'enableMemory': instance.enableMemory,
+      'useHistoryChat': instance.useHistoryChat,
+      'memories': instance.memories,
+      'quickPhrases': instance.quickPhrases,
     };

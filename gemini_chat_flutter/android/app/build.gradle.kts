@@ -42,3 +42,27 @@ android {
 flutter {
     source = "../.."
 }
+
+dependencies {
+    // 强制使用兼容的 AndroidX 版本
+    constraints {
+        implementation("androidx.browser:browser") {
+            version {
+                strictly("[1.0, 1.9)")
+                prefer("1.8.0")
+            }
+        }
+        implementation("androidx.core:core-ktx") {
+            version {
+                strictly("[1.0, 1.17)")
+                prefer("1.13.1")
+            }
+        }
+        implementation("androidx.core:core") {
+            version {
+                strictly("[1.0, 1.17)")
+                prefer("1.13.1")
+            }
+        }
+    }
+}

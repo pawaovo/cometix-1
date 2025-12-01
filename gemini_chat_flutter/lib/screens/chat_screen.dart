@@ -6,7 +6,9 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 import '../models/message.dart';
 import '../providers/messages_provider.dart';
 import '../providers/quick_phrases_provider.dart';
-import '../providers/gemini_service_provider.dart';
+import '../providers/ai_service_provider.dart';
+import '../providers/assistant_provider.dart';
+import 'package:provider/provider.dart' as provider;
 import '../widgets/input_bar.dart';
 import '../theme/app_theme.dart';
 
@@ -65,14 +67,25 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     final messages = ref.read(messagesProvider);
     final history = messages.sublist(0, messages.length - 1);
 
-    // Stream response from Gemini
-    final geminiService = ref.read(geminiServiceProvider);
+    // Get AI service (支持多服务商)
+    final aiService = ref.read(aiServiceProvider);
+
+    // Get current assistant configuration
+    final assistantProvider = provider.Provider.of<AssistantProvider>(
+      context,
+      listen: false,
+    );
+    final currentAssistant = assistantProvider.currentAssistant;
+
     String fullResponse = '';
 
     try {
-      await for (final chunk in geminiService.sendMessageStream(
+      await for (final chunk in aiService.sendMessageStream(
         history: history,
         newMessage: text,
+        systemPrompt: currentAssistant?.systemPrompt,
+        temperature: currentAssistant?.temperature ?? 0.7,
+        topP: currentAssistant?.topP ?? 1.0,
       )) {
         fullResponse += chunk;
         ref.read(messagesProvider.notifier).updateLastMessage(fullResponse);

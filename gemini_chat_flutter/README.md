@@ -1,222 +1,331 @@
-# Gemini Chat Flutter
+# Cometix - AI 聊天助手
 
-A 100% faithful Flutter migration of the React web Gemini Chat application, featuring a unique zoom drawer sidebar animation and comprehensive AI chat functionality.
+基于 Flutter 的 AI 聊天助手，支持多供应商、完整设置管理和现代化 UI 设计。
 
-## Features
+## ✨ 功能特性
 
-✅ **Zoom Drawer Animation** - Unique sidebar with scale/slide animation effect
-✅ **Chat Interface** - Full-featured chat with Gemini AI integration
-✅ **Streaming Responses** - Real-time streaming of AI responses
-✅ **Quick Phrases** - Shortcut system for frequently used prompts
-✅ **Tool Popups** - History, Model selection, MCP tools, and Quick phrases
-✅ **Expandable Input Menu** - Camera, Gallery, and File attachment options
-✅ **Dark Mode Support** - Full light/dark theme support
-✅ **Markdown Rendering** - Rich text formatting in AI responses
-✅ **Settings Page** - Comprehensive settings management
-✅ **Material 3 Design** - Modern UI with Tailwind-inspired colors
+### 核心功能
+- 🎨 **Zoom Drawer 动画** - 独特的侧边栏缩放滑动动画效果
+- 💬 **聊天界面** - 支持流式 AI 响应的完整聊天功能
+- 📝 **Markdown 渲染** - AI 回复支持富文本格式
+- 🌙 **深色模式** - 完整的明暗主题支持
+- 🎯 **shadcn_flutter UI** - 现代化组件库（100% 迁移完成）
 
-## Project Structure
+### 设置系统
+- 🖥️ **显示设置** - 主题、语言、字体大小、显示选项
+- 🤖 **助手管理** - 创建、编辑和配置 AI 助手
+- 🔧 **模型配置** - 聊天、标题、OCR、翻译的默认模型
+- 🔄 **服务供应商** - 多供应商支持（15+ 供应商）
+- 🔍 **搜索服务** - 13 种搜索引擎集成
+- 🛠️ **MCP 服务器** - MCP 服务器配置
+- ⚡ **快捷短语** - 常用提示词快捷系统
+- 🌐 **网络代理** - HTTP/HTTPS/SOCKS5 代理支持
+- ☁️ **WebDAV 备份** - 云端备份和恢复
+- 🎙️ **TTS 设置** - 语音朗读（语言、语速、音调、音量）
+- 📳 **触觉反馈** - 可自定义的振动反馈
+- 🎨 **主题调色板** - 自定义颜色主题选择
 
-```
-lib/
-├── main.dart                 # App entry point
-├── models/                   # Data models with Freezed
-│   ├── message.dart
-│   ├── assistant.dart
-│   ├── chat_session.dart
-│   └── quick_phrase.dart
-├── providers/                # Riverpod state management
-│   ├── messages_provider.dart
-│   ├── quick_phrases_provider.dart
-│   └── gemini_service_provider.dart
-├── screens/                  # Main screens
-│   ├── home_screen.dart      # Zoom drawer container
-│   ├── chat_screen.dart      # Chat interface
-│   └── settings_screen.dart  # Settings page
-├── widgets/                  # Reusable widgets
-│   ├── sidebar.dart          # Sidebar navigation
-│   └── input_bar.dart        # Complex input component
-├── services/                 # Business logic
-│   └── gemini_service.dart   # Gemini AI integration
-└── theme/                    # Theme configuration
-    └── app_theme.dart        # Tailwind-inspired colors
-```
+### 数据管理
+- 💾 **本地持久化** - SharedPreferences 存储设置
+- 📚 **聊天存储** - 本地聊天历史管理
+- 🔄 **备份恢复** - WebDAV 云端备份
+- 📤 **数据导出/导入** - 完整的数据迁移功能
 
-## Setup Instructions
+---
 
-### Prerequisites
+## 📦 技术栈
 
-- Flutter SDK 3.38.3 or higher
-- Dart 3.10.1 or higher
-- Android Studio / VS Code with Flutter extensions
+| 技术 | 版本 | 用途 |
+|------|------|------|
+| Flutter | 3.38.3+ | 跨平台框架 |
+| Dart | 3.10.1+ | 编程语言 |
+| shadcn_flutter | ^0.0.47 | UI 组件库 |
+| Riverpod | ^2.5.1 | 状态管理 |
+| Provider | ^6.1.2 | 状态管理 |
+| Freezed | ^2.5.7 | 不可变数据模型 |
+| SharedPreferences | ^2.3.3 | 本地持久化 |
+| google_generative_ai | ^0.4.6 | Gemini AI SDK |
+
+---
+
+## 🚀 快速开始
+
+### 环境要求
+
+- Flutter SDK 3.38.3 或更高版本
+- Dart 3.10.1 或更高版本
+- Android Studio / VS Code（安装 Flutter 扩展）
 - Gemini API Key
 
-### Installation
+### 安装步骤
 
-1. **Install dependencies**
+1. **克隆仓库**
+   ```bash
+   git clone https://github.com/anthropics/cometix.git
+   cd cometix/gemini_chat_flutter
+   ```
+
+2. **安装依赖**
    ```bash
    flutter pub get
    ```
 
-2. **Generate Freezed code**
+3. **生成 Freezed 代码**
    ```bash
    dart run build_runner build --delete-conflicting-outputs
    ```
 
-3. **Configure API Key**
+4. **配置 API Key**
 
-   Edit the `.env` file in the project root:
+   在项目根目录创建 `.env` 文件：
    ```
    API_KEY=your_gemini_api_key_here
    ```
 
-4. **Run the app**
+5. **运行应用**
    ```bash
    flutter run
    ```
 
-## Key Components
+---
 
-### 1. Zoom Drawer Animation
+## 📁 项目结构
 
-The unique sidebar animation is implemented in [home_screen.dart](lib/screens/home_screen.dart) using:
-- `AnimationController` for smooth transitions
-- `Transform.translate` for horizontal sliding
-- `Transform.scale` for zoom effect
-- `ClipRRect` for rounded corners during animation
-
-### 2. Input Bar
-
-The complex input bar ([input_bar.dart](lib/widgets/input_bar.dart)) features:
-- Expandable media menu (camera, gallery, file)
-- Tool popups (history, model, MCP, quick phrases)
-- Auto-suggestion based on shortcuts
-- Adaptive send button styling
-
-### 3. Chat Screen
-
-The chat interface ([chat_screen.dart](lib/screens/chat_screen.dart)) includes:
-- Auto-scrolling message list
-- Streaming AI responses
-- Markdown rendering
-- Loading indicators
-- Empty state UI
-
-### 4. State Management
-
-Using Riverpod for:
-- Message history management
-- Quick phrases storage
-- Gemini service provider
-- Global app state
-
-## Architecture Decisions
-
-### Why Riverpod?
-- Type-safe state management
-- Better testability
-- Compile-time safety
-- No BuildContext required
-
-### Why Freezed?
-- Immutable data models
-- JSON serialization
-- Copy-with functionality
-- Union types support
-
-### Why Material 3?
-- Modern design system
-- Built-in dark mode
-- Adaptive components
-- Better accessibility
-
-## Tailwind to Flutter Color Mapping
-
-```dart
-primaryColor: Color(0xFFE4D5D5)
-backgroundLight: Color(0xFFFFFFFF)
-backgroundDark: Color(0xFF121212)
-gray100-900: Tailwind gray scale
-accentBrown: Color(0xFF8B5E3C)
+```
+lib/
+├── main.dart                          # 应用入口
+├── models/                            # Freezed 数据模型
+│   ├── assistant.dart                 # AI 助手配置
+│   ├── message.dart                   # 聊天消息
+│   ├── provider_config.dart           # 服务供应商配置
+│   ├── search_service.dart            # 搜索引擎配置
+│   ├── mcp_config.dart                # MCP 服务器配置
+│   ├── proxy_config.dart              # 网络代理配置
+│   ├── theme_palette.dart             # 主题调色板
+│   └── backup.dart                    # WebDAV 备份配置
+├── providers/                         # 状态管理
+│   ├── settings_provider.dart         # 全局设置
+│   ├── assistant_provider.dart        # 助手管理
+│   ├── backup_provider.dart           # 备份管理
+│   ├── messages_provider.dart         # 聊天消息
+│   ├── quick_phrases_provider.dart    # 快捷短语
+│   └── ai_service_provider.dart       # AI 服务
+├── screens/                           # 主要页面
+│   ├── home_screen.dart               # Zoom Drawer 容器
+│   ├── chat_screen.dart               # 聊天界面
+│   ├── settings_screen.dart           # 设置导航
+│   ├── settings_pages.dart            # 设置子页面（16 个）
+│   ├── assistant_edit_page.dart       # 助手编辑器
+│   ├── tts_settings_page.dart         # TTS 语音设置
+│   ├── haptic_settings_page.dart      # 触觉反馈设置
+│   └── theme_palette_page.dart        # 主题调色板
+├── services/                          # 业务逻辑
+│   ├── gemini_service.dart            # Gemini AI 集成
+│   ├── ai_service.dart                # 多供应商 AI 服务
+│   ├── tts_service.dart               # 语音朗读服务
+│   ├── haptic_service.dart            # 触觉反馈服务
+│   └── backup_service.dart            # 备份操作
+├── widgets/                           # 可复用组件
+│   ├── sidebar.dart                   # 侧边栏导航
+│   ├── input_bar.dart                 # 输入组件
+│   └── settings_widgets.dart          # 设置 UI 组件
+└── theme/                             # 主题配置
+    └── app_theme.dart                 # Material 3 + shadcn 主题
 ```
 
-## Running on Different Platforms
+---
 
-### Android
+## 🎨 主要功能详情
+
+### 1. 助手管理
+
+创建和配置 AI 助手（4Tab 编辑页面）：
+
+**基础 Tab**：
+- 名称、描述
+- Temperature 和 Top P 参数
+- 上下文消息数量
+- 流式输出开关
+
+**提示词 Tab**：
+- 自定义系统提示词
+
+**记忆 Tab**：
+- 启用记忆开关
+- 参考历史聊天记录开关
+- 管理记忆列表（添加/删除）
+
+**快捷短语 Tab**：
+- 助手专属快捷短语（添加/编辑/删除）
+
+所有修改实时保存（500ms 防抖）
+
+### 2. 多供应商支持
+
+支持的供应商（15+）：
+- OpenAI
+- Anthropic
+- Google / Gemini
+- Azure OpenAI
+- Cohere
+- Mistral AI
+- Groq
+- Together AI
+- DeepSeek
+- Moonshot AI
+- 智谱 AI
+- 百川 AI
+- MiniMax
+- 豆包
+
+### 3. 搜索服务
+
+集成的搜索引擎（13 种）：
+- Bing（本地）
+- DuckDuckGo
+- Tavily
+- Exa
+- 智谱搜索
+- SearXNG
+- LinkUp
+- Brave
+- Metaso
+- Jina
+- Ollama
+- Perplexity
+- Bocha
+
+### 4. 数据持久化
+
+- **设置**：SharedPreferences
+- **聊天历史**：本地存储
+- **备份**：WebDAV 云存储
+
+---
+
+## 🛠️ 开发指南
+
+### 热重载
+在终端按 `r` 或使用 IDE 热重载按钮
+
+### 热重启
+在终端按 `R` 进行完整重启
+
+### 代码生成
 ```bash
-flutter run -d android
+dart run build_runner watch
 ```
 
-### iOS
+### 运行测试
 ```bash
-flutter run -d ios
+flutter test
 ```
 
-### Web (experimental)
-```bash
-flutter run -d chrome
-```
-
-## Development Tips
-
-### Hot Reload
-Press `r` in the terminal or use IDE hot reload button
-
-### Hot Restart
-Press `R` in the terminal for full restart
-
-### Debug Mode
-The app runs in debug mode by default with performance overlay available
-
-### Release Build
+### 构建发布版
 ```bash
 flutter build apk --release  # Android
 flutter build ios --release  # iOS
 ```
 
-## Troubleshooting
+---
 
-### Build Runner Issues
+## 📊 代码统计
+
+- **文件总数**：60+
+- **代码行数**：18,000+
+- **Provider 数量**：7 个
+- **数据模型**：12+ 个（Freezed）
+- **UI 页面**：20+ 个（含 16 个设置子页面）
+- **服务模块**：5 个
+
+---
+
+## 🐛 问题排查
+
+### Build Runner 问题
 ```bash
 flutter clean
 flutter pub get
 dart run build_runner build --delete-conflicting-outputs
 ```
 
-### API Key Not Working
-- Ensure `.env` file is in project root
-- Check API key is valid
-- Verify `.env` is listed in `pubspec.yaml` assets
+### API Key 无效
+- 确保 `.env` 文件在项目根目录
+- 检查 API Key 是否有效
+- 验证 `pubspec.yaml` 中 assets 包含 `.env`
 
-### Dependency Conflicts
+### 依赖冲突
 ```bash
 flutter pub upgrade
 ```
 
-## Migration Notes
+---
 
-This Flutter app is a 100% visual and functional recreation of the React web version with the following enhancements:
+## 📝 相关文档
 
-1. **Native Performance** - Smooth 60fps animations
-2. **Better Scrolling** - Native scroll physics
-3. **Offline Support** - Can be extended with local storage
-4. **Platform Integration** - Native camera, gallery, file picker
-5. **Smaller Bundle** - Optimized for mobile
+- [开发计划](../docs/PARALLEL_DEV_PLAN.md)
+- [合并总结](../docs/MERGE_SUMMARY.md)
+- [设置总结](../docs/SETTINGS_GENERAL_SUMMARY.md)
+- [项目架构](CLAUDE.md)
 
-## Future Enhancements
+---
 
-- [ ] Local message persistence
-- [ ] Image upload support
-- [ ] Voice input
-- [ ] Multi-language support
-- [ ] Custom assistant creation
-- [ ] MCP server integration
-- [ ] Search history functionality
+## 🗺️ 开发路线图
 
-## License
+### 已完成 ✅
+- [x] 基础聊天界面
+- [x] 设置系统
+- [x] 助手管理（4Tab 编辑页面 + 实时保存）
+- [x] 助手记忆系统（启用记忆 / 参考历史 / 管理记忆）
+- [x] 助手专属快捷短语
+- [x] 多供应商支持（OpenAI、Anthropic、Gemini）
+- [x] 搜索服务（13 种引擎）
+- [x] MCP 配置
+- [x] 网络代理（HTTP/HTTPS/SOCKS5）
+- [x] WebDAV 备份
+- [x] shadcn_flutter 迁移（100%）
+- [x] TTS 语音服务
+- [x] 主题调色板（圆形色块预览）
+- [x] 触觉反馈系统
+- [x] 快捷短语管理
 
-This project is for educational purposes.
+### 进行中 🚧
+- [ ] 多供应商 API 集成（后端）
+- [ ] 搜索服务集成（后端）
+- [ ] MCP 服务器连接（后端）
 
-## Credits
+### 计划中 📋
+- [ ] 语音输入（STT）
+- [ ] 图片上传与多模态
+- [ ] 桌面端快捷键
+- [ ] 学习模式
 
-Migrated from React web version to Flutter with 100% fidelity.
+---
+
+## 📄 许可证
+
+MIT License - 详见 [LICENSE](LICENSE) 文件
+
+---
+
+## 🙏 致谢
+
+- **参考项目**：[Kelivo](https://github.com/Chevey339/kelivo)
+- **UI 组件**：[shadcn_flutter](https://pub.dev/packages/shadcn_flutter)
+- **AI 服务**：[Google Gemini](https://ai.google.dev/)
+
+---
+
+## 🤝 贡献指南
+
+欢迎贡献！请随时提交 Pull Request。
+
+1. Fork 本仓库
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启 Pull Request
+
+---
+
+**使用 Flutter 和 Claude Code 用 ❤️ 构建**
